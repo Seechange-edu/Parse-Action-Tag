@@ -1,0 +1,28 @@
+name: "Run action by tag parse"
+description: "打tag以及tag解析"
+author: "MashyChen"
+branding:
+  icon: "git-branch"
+  color: "green"
+inputs:
+  repository:
+    required: false
+    description: "给模板repository打tag, 默认是当前repository"
+  githubToken:
+    required: true
+    description: "github仓库的访问权限token"
+  type:
+    required: false
+    description: "当前的类型是parse还是stringify"
+    default: "parse"
+  runCommand:
+    required: false
+    description: "执行的命令"
+    default: "build"
+  appPath:
+    required: false
+    description: "构建后产物存放路径"
+    default: ""
+runs:
+  using: "node12"
+  main: "dist/index.js"

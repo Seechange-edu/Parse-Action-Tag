@@ -1,0 +1,29 @@
+{
+  "name": "tag-parse-action",
+  "version": "1.0.0",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc && ncc build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MashyChen/tag-parse-action.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MashyChen/tag-parse-action/issues"
+  },
+  "homepage": "https://github.com/MashyChen/tag-parse-action#readme",
+  "description": "",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "axios": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.7",
+    "@vercel/ncc": "^0.38.3",
+    "typescript": "^5.8.3"
+  }
+}
