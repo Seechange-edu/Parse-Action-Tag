@@ -143,9 +143,9 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-api:uat',
         ACTIVE: 'uat',
         PORT: 9001,
-        OUT_PORT: 19001,
+        OUT_PORT: 9001,
         PORT1: 9002,
-        OUT_PORT1: 19002,
+        OUT_PORT1: 9002,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-speaking-exercise-api.seechange-edu.com/logs:/app/logs'
       }
     },
