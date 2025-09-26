@@ -153,14 +153,14 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'speaking-exercise-frontend-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-frontend:dev',
+        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
         PORT: 3000,
         OUT_PORT: 13000
       },
       uat: {
         NAME: 'speaking-exercise-frontend-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-frontend',
+        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
         PORT: 3000,
         OUT_PORT: 3000
       }
