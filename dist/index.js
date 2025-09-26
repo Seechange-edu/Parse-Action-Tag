@@ -297,14 +297,14 @@ const getEnvValueByBranch = (repository, branch) => {
         },
         [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
             dev: {
-                NAME: 'speaking-exercise-frontend-dev',
+                NAME: 'speaking-exercise-web-dev',
                 ACTIVE: 'dev',
                 IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
                 PORT: 3000,
                 OUT_PORT: 13000
             },
             uat: {
-                NAME: 'speaking-exercise-frontend-uat',
+                NAME: 'speaking-exercise-web-uat',
                 ACTIVE: 'uat',
                 IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
                 PORT: 3000,
