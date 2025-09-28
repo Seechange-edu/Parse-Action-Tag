@@ -319,14 +319,16 @@ const getEnvValueByBranch = (repository, branch) => {
                 ACTIVE: 'dev',
                 IMAGE: 'registry.digitalocean.com/seechange/portal-api:dev',
                 PORT: 9002,
-                OUT_PORT: 19002
+                OUT_PORT: 19002,
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-portal-api.seechange-edu.com/logs:/app/logs'
             },
             uat: {
                 NAME: 'portal-api-uat',
                 ACTIVE: 'uat',
                 IMAGE: 'registry.digitalocean.com/seechange/portal-api:uat',
                 PORT: 9002,
-                OUT_PORT: 9002
+                OUT_PORT: 9002,
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-portal-api.seechange-edu.com/logs:/app/logs'
             }
         }
     };
