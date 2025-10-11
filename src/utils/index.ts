@@ -94,6 +94,7 @@ enum RepositoryEnum {
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
+  console.log('getEnvValueByBranch', repository, branch, RepositoryEnum)
   const repositoryMap = {
     [RepositoryEnum.CMS_FRONTEND]: {
       dev: {
