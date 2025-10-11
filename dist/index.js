@@ -235,8 +235,8 @@ var RepositoryEnum;
 (function (RepositoryEnum) {
     RepositoryEnum["CMS_FRONTEND"] = "cms-frontend";
     RepositoryEnum["CMS_BACKEND"] = "cms_backend";
-    RepositoryEnum["SPEAKING_EXERCISE_BACKEND"] = "speaking-exercise-backend";
-    RepositoryEnum["SPEAKING_EXERCISE_FRONTEND"] = "speaking-exercise-frontend";
+    RepositoryEnum["SPEAKING_EXERCISE_BACKEND"] = "think-and-speak-backend";
+    RepositoryEnum["SPEAKING_EXERCISE_FRONTEND"] = "think-and-speak-frontend";
     RepositoryEnum["EVENT_BACKEND"] = "event-backend";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
@@ -2418,7 +2418,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -4991,7 +4991,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3261:
+/***/ 3656:
 /***/ ((module) => {
 
 "use strict";
