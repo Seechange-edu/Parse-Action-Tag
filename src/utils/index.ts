@@ -88,8 +88,8 @@ export const formatTime = (dateTime: any, cFormat: string): string => {
 enum RepositoryEnum {
   CMS_FRONTEND = 'cms-frontend',
   CMS_BACKEND = 'cms_backend',
-  SPEAKING_EXERCISE_BACKEND = 'speaking-exercise-backend',
-  SPEAKING_EXERCISE_FRONTEND = 'speaking-exercise-frontend',
+  SPEAKING_EXERCISE_BACKEND = 'think-and-speak-backend',
+  SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
 }
 
