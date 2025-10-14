@@ -235,7 +235,7 @@ var RepositoryEnum;
 (function (RepositoryEnum) {
     RepositoryEnum["CMS_FRONTEND"] = "cms-frontend";
     RepositoryEnum["CMS_BACKEND"] = "cms_backend";
-    RepositoryEnum["SPEAKING_EXERCISE_BACKEND"] = "think-and-speak-backend";
+    RepositoryEnum["THINK_AND_SPEAK_BACKEND"] = "think-and-speak-backend";
     RepositoryEnum["SPEAKING_EXERCISE_FRONTEND"] = "think-and-speak-frontend";
     RepositoryEnum["EVENT_BACKEND"] = "event-backend";
 })(RepositoryEnum || (RepositoryEnum = {}));
@@ -275,26 +275,26 @@ const getEnvValueByBranch = (repository, branch) => {
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
             }
         },
-        [RepositoryEnum.SPEAKING_EXERCISE_BACKEND]: {
+        [RepositoryEnum.THINK_AND_SPEAK_BACKEND]: {
             dev: {
-                NAME: 'speaking-exercise-api-dev',
-                IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-api:dev',
+                NAME: 'think-and-speak-api-dev',
+                IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:dev',
                 ACTIVE: 'dev',
                 PORT: 9001,
                 OUT_PORT: 19001,
                 PORT1: 9011,
                 OUT_PORT1: 19011,
-                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-speaking-exercise-api.seechange-edu.com/logs:/app/logs'
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-think-and-speak-api.seechange-edu.com/logs:/app/logs'
             },
             uat: {
-                NAME: 'speaking-exercise-api-uat',
-                IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-api:uat',
+                NAME: 'think-and-speak-api-uat',
+                IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:uat',
                 ACTIVE: 'uat',
                 PORT: 9001,
                 OUT_PORT: 9001,
                 PORT1: 9011,
                 OUT_PORT1: 9011,
-                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-speaking-exercise-api.seechange-edu.com/logs:/app/logs'
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
             }
         },
         [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
@@ -2418,7 +2418,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -4991,7 +4991,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3656:
+/***/ 3261:
 /***/ ((module) => {
 
 "use strict";
