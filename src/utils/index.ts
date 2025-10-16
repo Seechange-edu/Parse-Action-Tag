@@ -131,24 +131,24 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
     },
     [RepositoryEnum.THINK_AND_SPEAK_BACKEND]: {
       dev: {
-        NAME: 'speaking-exercise-api-dev',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-api:dev',
+        NAME: 'think-and-speak-api-dev',
+        IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:dev',
         ACTIVE: 'dev',
         PORT: 9001,
         OUT_PORT: 19001,
         PORT1: 9011,
         OUT_PORT1: 19011,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-speaking-exercise-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       },
       uat: {
-        NAME: 'speaking-exercise-api-uat',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-api:uat',
+        NAME: 'think-and-speak-api-uat',
+        IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:uat',
         ACTIVE: 'uat',
         PORT: 9001,
         OUT_PORT: 9001,
         PORT1: 9011,
         OUT_PORT1: 9011,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-speaking-exercise-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
     [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
