@@ -200,7 +200,14 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         IMAGE: 'registry.digitalocean.com/seechange/scmun:uat',
         PORT: 3000,
         OUT_PORT: 3002
-      }
+      },
+      'dev-oxford':{
+        NAME: 'dev-oxford',
+        ACTIVE: 'dev-oxford',
+        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-oxford',
+        PORT: 3000,
+        OUT_PORT: 13004
+  }
     }
   }
   const envValueMap = repositoryMap[repository as keyof typeof repositoryMap] || null
