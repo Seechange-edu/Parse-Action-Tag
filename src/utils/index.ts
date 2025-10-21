@@ -91,6 +91,7 @@ enum RepositoryEnum {
   THINK_AND_SPEAK_BACKEND = 'think-and-speak-backend',
   SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
+  EVENT_FRONTEND = 'event-frontend',
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
@@ -183,6 +184,22 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         PORT: 9002,
         OUT_PORT: 9002,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-portal-api.seechange-edu.com/logs:/app/logs'
+      }
+    },
+    [RepositoryEnum.EVENT_FRONTEND]: {
+      dev: {
+        NAME: 'scmun-dev',
+        ACTIVE: 'dev',
+        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev',
+        PORT: 3000,
+        OUT_PORT: 13002
+      },
+      uat: {
+        NAME: 'scmun-uat',
+        ACTIVE: 'uat',
+        IMAGE: 'registry.digitalocean.com/seechange/scmun:uat',
+        PORT: 3000,
+        OUT_PORT: 3002
       }
     }
   }
