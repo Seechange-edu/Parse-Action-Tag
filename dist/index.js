@@ -316,20 +316,20 @@ const getEnvValueByBranch = (repository, branch) => {
         },
         [RepositoryEnum.EVENT_BACKEND]: {
             dev: {
-                NAME: 'portal-api-dev',
+                NAME: 'event-api-dev',
                 ACTIVE: 'dev',
-                IMAGE: 'registry.digitalocean.com/seechange/portal-api:dev',
+                IMAGE: 'registry.digitalocean.com/seechange/event-api:dev',
                 PORT: 9002,
                 OUT_PORT: 19002,
-                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-portal-api.seechange-edu.com/logs:/app/logs'
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-event-api.seechange-edu.com/logs:/app/logs'
             },
             uat: {
-                NAME: 'portal-api-uat',
+                NAME: 'event-api-uat',
                 ACTIVE: 'uat',
-                IMAGE: 'registry.digitalocean.com/seechange/portal-api:uat',
+                IMAGE: 'registry.digitalocean.com/seechange/event-api:uat',
                 PORT: 9002,
                 OUT_PORT: 9002,
-                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-portal-api.seechange-edu.com/logs:/app/logs'
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-event-api.seechange-edu.com/logs:/app/logs'
             }
         },
         [RepositoryEnum.EVENT_FRONTEND]: {
