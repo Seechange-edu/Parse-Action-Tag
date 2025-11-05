@@ -353,6 +353,13 @@ const getEnvValueByBranch = (repository, branch) => {
                 IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-oxford',
                 PORT: 3000,
                 OUT_PORT: 13004
+            },
+            'dev-ipdc': {
+                NAME: 'dev-ipdc',
+                ACTIVE: 'dev-ipdc',
+                IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc',
+                PORT: 3000,
+                OUT_PORT: 13005
             }
         }
     };
