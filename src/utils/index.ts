@@ -214,6 +214,13 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc',
         PORT: 3000,
         OUT_PORT: 13005
+      },
+      'dev-ipdc-judge':{
+        NAME: 'dev-ipdc-judge',
+        ACTIVE: 'dev-ipdc-judge',
+        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc-judge',
+        PORT: 3000,
+        OUT_PORT: 13006
       }
     }
   }
