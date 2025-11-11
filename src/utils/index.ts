@@ -92,6 +92,7 @@ enum RepositoryEnum {
   SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
+  OFFICIAL_WEBSITE = 'official-website',
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
@@ -221,6 +222,22 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc-judge',
         PORT: 3000,
         OUT_PORT: 13006
+      }
+    },
+    [RepositoryEnum.OFFICIAL_WEBSITE]: {
+      dev: {
+        NAME: 'official-website-dev',
+        ACTIVE: 'dev',
+        IMAGE: 'registry.digitalocean.com/seechange/official-website:dev',
+        PORT: 3000,
+        OUT_PORT: 13007
+      },
+      uat: {
+        NAME: 'official-website-uat',
+        ACTIVE: 'uat',
+        IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
+        PORT: 3000,
+        OUT_PORT: 3007
       }
     }
   }
