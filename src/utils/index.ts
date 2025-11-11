@@ -92,7 +92,7 @@ enum RepositoryEnum {
   SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
-  OFFICIAL_WEBSITE = 'official-website',
+  OFFICIAL_WEBSITE = 'official_website',
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {

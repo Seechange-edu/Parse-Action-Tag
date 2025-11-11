@@ -239,7 +239,7 @@ var RepositoryEnum;
     RepositoryEnum["SPEAKING_EXERCISE_FRONTEND"] = "think-and-speak-frontend";
     RepositoryEnum["EVENT_BACKEND"] = "event-backend";
     RepositoryEnum["EVENT_FRONTEND"] = "event-frontend";
-    RepositoryEnum["OFFICIAL_WEBSITE"] = "official-website";
+    RepositoryEnum["OFFICIAL_WEBSITE"] = "official_website";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
     const repositoryMap = {
