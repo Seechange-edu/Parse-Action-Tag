@@ -290,7 +290,8 @@ const getEnvValueByBranch = (repository, branch) => {
             },
             uat: {
                 NAME: 'think-and-speak-api-uat',
-                IMAGE: 'latest',
+                // IMAGE: 'latest',
+                IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:uat',
                 ACTIVE: 'uat',
                 PORT: 9001,
                 OUT_PORT: 9001,
