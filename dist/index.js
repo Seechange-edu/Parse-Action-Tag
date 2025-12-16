@@ -310,7 +310,7 @@ const getEnvValueByBranch = (repository, branch) => {
             uat: {
                 NAME: 'speaking-exercise-web-uat',
                 ACTIVE: 'uat',
-                IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
+                IMAGE: 'seechange/speaking-exercise-web:uat',
                 PORT: 3000,
                 OUT_PORT: 3000
             }
