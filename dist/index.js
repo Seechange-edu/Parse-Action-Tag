@@ -377,14 +377,14 @@ const getEnvValueByBranch = (repository, branch) => {
             dev: {
                 NAME: 'official-website-dev',
                 ACTIVE: 'dev',
-                IMAGE: 'registry.digitalocean.com/seechange/official-website:dev',
+                // IMAGE: 'registry.digitalocean.com/seechange/official-website:dev',
                 PORT: 3000,
                 OUT_PORT: 13007
             },
             uat: {
                 NAME: 'official-website-uat',
                 ACTIVE: 'uat',
-                IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
+                // IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
                 PORT: 3000,
                 OUT_PORT: 3007
             }
@@ -2476,7 +2476,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -5049,7 +5049,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3656:
+/***/ 3261:
 /***/ ((module) => {
 
 "use strict";
