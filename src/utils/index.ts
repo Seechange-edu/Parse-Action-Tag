@@ -89,7 +89,7 @@ enum RepositoryEnum {
   CMS_FRONTEND = 'cms-frontend',
   CMS_BACKEND = 'cms_backend',
   THINK_AND_SPEAK_BACKEND = 'think-and-speak-backend',
-  SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
+  THINK_AND_SPEAK_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
   OFFICIAL_WEBSITE = 'official_website',
@@ -154,18 +154,20 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
-    [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
+    [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
       dev: {
-        NAME: 'speaking-exercise-web-dev',
+        PREV_NAME: 'speaking-exercise-web-dev',
+        NAME: 'think-and-speak-web-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
         PORT: 3000,
         OUT_PORT: 13000
       },
       uat: {
-        NAME: 'speaking-exercise-web-uat',
+        PREV_NAME: 'speaking-exercise-web-uat',
+        NAME: 'think-and-speak-web-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
         PORT: 3000,
         OUT_PORT: 3000
       }
