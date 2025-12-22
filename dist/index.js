@@ -236,7 +236,7 @@ var RepositoryEnum;
     RepositoryEnum["CMS_FRONTEND"] = "cms-frontend";
     RepositoryEnum["CMS_BACKEND"] = "cms_backend";
     RepositoryEnum["THINK_AND_SPEAK_BACKEND"] = "think-and-speak-backend";
-    RepositoryEnum["SPEAKING_EXERCISE_FRONTEND"] = "think-and-speak-frontend";
+    RepositoryEnum["THINK_AND_SPEAK_FRONTEND"] = "think-and-speak-frontend";
     RepositoryEnum["EVENT_BACKEND"] = "event-backend";
     RepositoryEnum["EVENT_FRONTEND"] = "event-frontend";
     RepositoryEnum["OFFICIAL_WEBSITE"] = "official_website";
@@ -300,18 +300,20 @@ const getEnvValueByBranch = (repository, branch) => {
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
             }
         },
-        [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
+        [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
             dev: {
-                NAME: 'speaking-exercise-web-dev',
+                PREV_NAME: 'speaking-exercise-web-dev',
+                NAME: 'think-and-speak-web-dev',
                 ACTIVE: 'dev',
-                IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
+                // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
                 PORT: 3000,
                 OUT_PORT: 13000
             },
             uat: {
-                NAME: 'speaking-exercise-web-uat',
+                PREV_NAME: 'speaking-exercise-web-uat',
+                NAME: 'think-and-speak-web-uat',
                 ACTIVE: 'uat',
-                IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
+                // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
                 PORT: 3000,
                 OUT_PORT: 3000
             }
@@ -2474,7 +2476,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -5047,7 +5049,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3261:
+/***/ 3656:
 /***/ ((module) => {
 
 "use strict";
