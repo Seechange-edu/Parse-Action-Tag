@@ -229,7 +229,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       'dev-aimcup':{
         NAME: 'dev-aimcup',
         ACTIVE: 'dev-aimcup',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-aimcup',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-aimcup',
         PORT: 3000,
         OUT_PORT: 13009
       }
