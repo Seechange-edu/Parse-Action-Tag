@@ -89,7 +89,7 @@ enum RepositoryEnum {
   CMS_FRONTEND = 'cms-frontend',
   CMS_BACKEND = 'cms_backend',
   THINK_AND_SPEAK_BACKEND = 'think-and-speak-backend',
-  SPEAKING_EXERCISE_FRONTEND = 'think-and-speak-frontend',
+  THINK_AND_SPEAK_FRONTEND = 'think-and-speak-frontend',
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
   OFFICIAL_WEBSITE = 'official_website',
@@ -101,14 +101,14 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'cms-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/cms:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/cms:dev',
         PORT: 3000,
         OUT_PORT: 13003
       },
       uat: {
         NAME: 'cms-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/cms:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/cms:uat',
         PORT: 3000,
         OUT_PORT: 3003
       },
@@ -117,7 +117,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'cms-api-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/cms-api:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/cms-api:dev',
         PORT: 9003,
         OUT_PORT: 19003,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-cms-api.seechange-edu.com/logs:/app/logs'
@@ -125,7 +125,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       uat: {
         NAME: 'cms-api-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/cms-api:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/cms-api:uat',
         PORT: 9003,
         OUT_PORT: 9003,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
@@ -134,7 +134,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
     [RepositoryEnum.THINK_AND_SPEAK_BACKEND]: {
       dev: {
         NAME: 'think-and-speak-api-dev',
-        IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:dev',
         ACTIVE: 'dev',
         PORT: 9001,
         OUT_PORT: 19001,
@@ -144,7 +144,8 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       },
       uat: {
         NAME: 'think-and-speak-api-uat',
-        IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:uat',
+        // IMAGE: 'latest',
+        // IMAGE: 'registry.digitalocean.com/seechange/think-and-speak-api:uat',
         ACTIVE: 'uat',
         PORT: 9001,
         OUT_PORT: 9001,
@@ -153,18 +154,20 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
-    [RepositoryEnum.SPEAKING_EXERCISE_FRONTEND]: {
+    [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
       dev: {
-        NAME: 'speaking-exercise-web-dev',
+        PREV_NAME: 'speaking-exercise-web-dev',
+        NAME: 'think-and-speak-web-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:dev',
         PORT: 3000,
         OUT_PORT: 13000
       },
       uat: {
-        NAME: 'speaking-exercise-web-uat',
+        PREV_NAME: 'speaking-exercise-web-uat',
+        NAME: 'think-and-speak-web-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
         PORT: 3000,
         OUT_PORT: 3000
       }
@@ -173,7 +176,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'event-api-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/event-api:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/event-api:dev',
         PORT: 9002,
         OUT_PORT: 19002,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-event-api.seechange-edu.com/logs:/app/logs'
@@ -181,7 +184,7 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       uat: {
         NAME: 'event-api-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/event-api:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/event-api:uat',
         PORT: 9002,
         OUT_PORT: 9002,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-event-api.seechange-edu.com/logs:/app/logs'
@@ -191,35 +194,35 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'scmun-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:dev',
         PORT: 3000,
         OUT_PORT: 13002
       },
       uat: {
         NAME: 'scmun-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:uat',
         PORT: 3000,
         OUT_PORT: 3002
       },
       'dev-oxford':{
         NAME: 'dev-oxford',
         ACTIVE: 'dev-oxford',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-oxford',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-oxford',
         PORT: 3000,
         OUT_PORT: 13004
       },
       'dev-ipdc':{
         NAME: 'dev-ipdc',
         ACTIVE: 'dev-ipdc',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc',
         PORT: 3000,
         OUT_PORT: 3008
       },
       'dev-ipdc-judge':{
         NAME: 'dev-ipdc-judge',
         ACTIVE: 'dev-ipdc-judge',
-        IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc-judge',
+        // IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc-judge',
         PORT: 3000,
         OUT_PORT: 13006
       },
@@ -235,14 +238,14 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       dev: {
         NAME: 'official-website-dev',
         ACTIVE: 'dev',
-        IMAGE: 'registry.digitalocean.com/seechange/official-website:dev',
+        // IMAGE: 'registry.digitalocean.com/seechange/official-website:dev',
         PORT: 3000,
         OUT_PORT: 13007
       },
       uat: {
         NAME: 'official-website-uat',
         ACTIVE: 'uat',
-        IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
+        // IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
         PORT: 3000,
         OUT_PORT: 3007
       }
