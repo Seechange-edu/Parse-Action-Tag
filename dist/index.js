@@ -368,6 +368,13 @@ const getEnvValueByBranch = (repository, branch) => {
                 IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-ipdc-judge',
                 PORT: 3000,
                 OUT_PORT: 13006
+            },
+            'dev-aimcup': {
+                NAME: 'dev-aimcup',
+                ACTIVE: 'dev-aimcup',
+                IMAGE: 'registry.digitalocean.com/seechange/scmun:dev-aimcup',
+                PORT: 3000,
+                OUT_PORT: 13009
             }
         },
         [RepositoryEnum.OFFICIAL_WEBSITE]: {
