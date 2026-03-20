@@ -93,8 +93,8 @@ enum RepositoryEnum {
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
   OFFICIAL_WEBSITE = 'official_website',
-  NEXUS_AI_FRONTEND = 'Nexus-AI-frontend',
-  NEXUS_AI_BACKEND = 'Nexus-AI-backend',
+  NEXUS_AI_FRONTEND = 'act-nexus-ai-frontend',
+  NEXUS_AI_BACKEND = 'act-nexus-ai-backend',
   SFS = 'smart_file_system'
 }
 

@@ -28,12 +28,14 @@ async function run(): Promise<void> {
       const {full_name} = repository || {}
       const {name: pusherName} = pusher || {}
       const [, outRepository] = full_name.split('/')
+      const [, topRepositoryName] = topRepository.split('/')
 
       console.log('topRepository: ', topRepository)
       const tagUrl = getTagUrl(topRepository || full_name)
       const timesTamp = formatTime(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}')
 
-      const envValue = getEnvValueByBranch(outRepository, branch)
+      const envValue = getEnvValueByBranch(topRepositoryName, branch)
+        || getEnvValueByBranch(outRepository, branch)
       console.log('envValue: ', envValue)
 
       if (!envValue) {

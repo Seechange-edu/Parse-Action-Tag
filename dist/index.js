@@ -73,10 +73,12 @@ function run() {
                 const { full_name } = repository || {};
                 const { name: pusherName } = pusher || {};
                 const [, outRepository] = full_name.split('/');
+                const [, topRepositoryName] = topRepository.split('/');
                 console.log('topRepository: ', topRepository);
                 const tagUrl = (0, utils_1.getTagUrl)(topRepository || full_name);
                 const timesTamp = (0, utils_1.formatTime)(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}');
-                const envValue = (0, utils_1.getEnvValueByBranch)(outRepository, branch);
+                const envValue = (0, utils_1.getEnvValueByBranch)(topRepositoryName, branch)
+                    || (0, utils_1.getEnvValueByBranch)(outRepository, branch);
                 console.log('envValue: ', envValue);
                 if (!envValue) {
                     core.setFailed(`${outRepository} ${branch} 环境变量不存在`);
@@ -240,8 +242,8 @@ var RepositoryEnum;
     RepositoryEnum["EVENT_BACKEND"] = "event-backend";
     RepositoryEnum["EVENT_FRONTEND"] = "event-frontend";
     RepositoryEnum["OFFICIAL_WEBSITE"] = "official_website";
-    RepositoryEnum["NEXUS_AI_FRONTEND"] = "Nexus-AI-frontend";
-    RepositoryEnum["NEXUS_AI_BACKEND"] = "Nexus-AI-backend";
+    RepositoryEnum["NEXUS_AI_FRONTEND"] = "act-nexus-ai-frontend";
+    RepositoryEnum["NEXUS_AI_BACKEND"] = "act-nexus-ai-backend";
     RepositoryEnum["SFS"] = "smart_file_system";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
