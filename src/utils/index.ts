@@ -93,6 +93,9 @@ enum RepositoryEnum {
   EVENT_BACKEND = 'event-backend',
   EVENT_FRONTEND = 'event-frontend',
   OFFICIAL_WEBSITE = 'official_website',
+  NEXUS_AI_FRONTEND = 'Nexus-AI-frontend',
+  NEXUS_AI_BACKEND = 'Nexus-AI-backend',
+  SFS = 'smart_file_system'
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
@@ -249,7 +252,49 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         PORT: 3000,
         OUT_PORT: 3007
       }
-    }
+    },
+    [RepositoryEnum.NEXUS_AI_FRONTEND]: {
+      dev: {
+        NAME: 'nexus-ai-frontend-dev',
+        ACTIVE: 'dev',
+        PORT: 80,
+        OUT_PORT: 15173
+      },
+      uat: {
+        NAME: 'nexus-ai-frontend-uat',
+        ACTIVE: 'uat',
+        PORT: 80,
+        OUT_PORT: 25173
+      }
+    },
+    [RepositoryEnum.NEXUS_AI_BACKEND]: {
+      dev: {
+        NAME: 'nexus-ai-backend-dev',
+        ACTIVE: 'dev',
+        PORT: 8000,
+        OUT_PORT: 18000
+      },
+      uat: {
+        NAME: 'nexus-ai-backend-uat',
+        ACTIVE: 'uat',
+        PORT: 8000,
+        OUT_PORT: 28000
+      }
+    },
+    [RepositoryEnum.SFS]: {
+      dev: {
+        NAME: 'smart-file-system-dev',
+        ACTIVE: 'dev',
+        PORT: 5000,
+        OUT_PORT: 18002
+      },
+      uat: {
+        NAME: 'smart-file-system-uat',
+        ACTIVE: 'uat',
+        PORT: 5000,
+        OUT_PORT: 28002
+      }
+    },
   }
   const envValueMap = repositoryMap[repository as keyof typeof repositoryMap] || null
   if (!envValueMap) {
