@@ -265,6 +265,12 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         ACTIVE: 'uat',
         PORT: 80,
         OUT_PORT: 25173
+      },
+      prod: {
+        NAME: 'nexus-ai-frontend-prod',
+        ACTIVE: 'prod',
+        PORT: 80,
+        OUT_PORT: 80
       }
     },
     [RepositoryEnum.NEXUS_AI_BACKEND]: {
@@ -279,6 +285,12 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         ACTIVE: 'uat',
         PORT: 8000,
         OUT_PORT: 28000
+      },
+      prod: {
+        NAME: 'nexus-ai-backend-prod',
+        ACTIVE: 'prod',
+        PORT: 8000,
+        OUT_PORT: 8000
       }
     },
     [RepositoryEnum.SFS]: {

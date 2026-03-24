@@ -413,6 +413,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 ACTIVE: 'uat',
                 PORT: 80,
                 OUT_PORT: 25173
+            },
+            prod: {
+                NAME: 'nexus-ai-frontend-prod',
+                ACTIVE: 'prod',
+                PORT: 80,
+                OUT_PORT: 80
             }
         },
         [RepositoryEnum.NEXUS_AI_BACKEND]: {
@@ -427,6 +433,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 ACTIVE: 'uat',
                 PORT: 8000,
                 OUT_PORT: 28000
+            },
+            prod: {
+                NAME: 'nexus-ai-backend-prod',
+                ACTIVE: 'prod',
+                PORT: 8000,
+                OUT_PORT: 8000
             }
         },
         [RepositoryEnum.SFS]: {
@@ -2530,7 +2542,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -5103,7 +5115,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3656:
+/***/ 3261:
 /***/ ((module) => {
 
 "use strict";
