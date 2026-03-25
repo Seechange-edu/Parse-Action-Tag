@@ -476,7 +476,7 @@ var RepositoryEnum;
     RepositoryEnum["NEXUS_AI_FRONTEND"] = "act-nexus-ai-frontend";
     RepositoryEnum["NEXUS_AI_BACKEND"] = "act-nexus-ai-backend";
     RepositoryEnum["SFS"] = "smart_file_system";
-    RepositoryEnum["AI_TUTOR"] = "ai-tutor-backend";
+    RepositoryEnum["AI_TUTOR"] = "AI-Tutor-Backend";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
     const repositoryMap = {

@@ -96,7 +96,7 @@ enum RepositoryEnum {
   NEXUS_AI_FRONTEND = 'act-nexus-ai-frontend',
   NEXUS_AI_BACKEND = 'act-nexus-ai-backend',
   SFS = 'smart_file_system',
-  AI_TUTOR = 'ai-tutor-backend'
+  AI_TUTOR = 'AI-Tutor-Backend'
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
