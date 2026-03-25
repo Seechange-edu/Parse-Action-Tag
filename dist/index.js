@@ -55,6 +55,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(9999));
 const github = __importStar(__nccwpck_require__(5380));
 const utils_1 = __nccwpck_require__(3748);
+const topTagPush_1 = __nccwpck_require__(1893);
 const axios_1 = __importDefault(__nccwpck_require__(3053));
 // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
 const ref = github.context.ref;
@@ -63,32 +64,101 @@ console.log('github-----', github);
 console.log('github.context', github.context);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
             const topRepository = core.getInput('repository');
             const githubToken = core.getInput('githubToken');
+            const topTagName = core.getInput('tagName');
             const type = core.getInput('type');
+            console.log('[stringify/parse] inputs', {
+                type,
+                repository: topRepository || '(empty)',
+                tagName: topTagName || '(empty)',
+                githubToken: githubToken ? `set(len=${githubToken.length})` : '(empty)'
+            });
+            console.log('[context] ref', ref);
             if (type === 'stringify') {
-                const branch = (0, utils_1.getBranchByHead)(ref) || (0, utils_1.getBranchByTag)(ref);
                 const { repository, pusher } = pushPayload || {};
                 const { full_name } = repository || {};
                 const { name: pusherName } = pusher || {};
-                const [, outRepository] = full_name.split('/');
+                console.log('[stringify] pushPayload.repository', { full_name, pusherName });
+                let branch;
+                let outRepository;
+                if (topTagName === null || topTagName === void 0 ? void 0 : topTagName.trim()) {
+                    console.log('[stringify] 走 tagName 分支: 从 top 仓库 Release 解析分支并更新 ref，环境使用 prod');
+                    const octokit = github.getOctokit(githubToken);
+                    if (!(topRepository === null || topRepository === void 0 ? void 0 : topRepository.trim())) {
+                        core.setFailed('指定 tagName 时必须提供 repository（top 仓库，格式 owner/repo）');
+                        return;
+                    }
+                    const topRepo = topRepository.trim();
+                    const tag = topTagName.trim();
+                    console.log('[stringify][tagName] topRepo, tag', { topRepo, tag });
+                    const resolved = yield (0, topTagPush_1.resolveBranchFromTopTag)(octokit, topRepo, tag);
+                    const tagResolvedBranch = resolved.branch;
+                    console.log('[stringify][tagName] resolveBranchFromTopTag 结果', {
+                        tagResolvedBranch,
+                        bodyKeys: Object.keys(resolved.body || {}),
+                        bodyRepository: resolved.body.repository
+                    });
+                    const fromBody = typeof resolved.body.repository === 'string'
+                        ? resolved.body.repository
+                        : '';
+                    const [, fromPush] = (full_name || '').split('/');
+                    outRepository = fromBody || fromPush || '';
+                    console.log('[stringify][tagName] outRepository 来源', {
+                        fromBody,
+                        fromPush,
+                        outRepository
+                    });
+                    if (!outRepository) {
+                        core.setFailed('无法确定子仓库名：请在 Release body 的 JSON 中提供 repository，或确保 push 事件包含 repository.full_name');
+                        return;
+                    }
+                    console.log('[stringify][tagName] 即将 pushBranchToTagCommit', {
+                        topRepo,
+                        tag,
+                        tagResolvedBranch
+                    });
+                    yield (0, topTagPush_1.pushBranchToTagCommit)(octokit, topRepo, tag, tagResolvedBranch);
+                    core.info(`已根据 tag「${tag}」将 ${topRepo} 的分支「${tagResolvedBranch}」更新为与该 tag 相同的提交；环境配置使用 prod`);
+                    branch = 'prod';
+                    console.log('[stringify][tagName] Git 分支已对齐；用于 env/tagMessage 的 branch 固定为 prod');
+                }
+                else {
+                    console.log('[stringify] 走 ref 分支: 从 github.context.ref 解析分支');
+                    branch = (0, utils_1.getBranchByHead)(ref) || (0, utils_1.getBranchByTag)(ref);
+                    const [, out] = full_name.split('/');
+                    outRepository = out;
+                    console.log('[stringify][ref] branch, outRepository', { branch, outRepository });
+                }
                 const [, topRepositoryName] = topRepository.split('/');
                 console.log('topRepository: ', topRepository);
+                console.log('[stringify] topRepositoryName, branch(用于 env)', {
+                    topRepositoryName,
+                    branch
+                });
                 const tagUrl = (0, utils_1.getTagUrl)(topRepository || full_name);
                 const timesTamp = (0, utils_1.formatTime)(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}');
+                console.log('[stringify] tagUrl, timesTamp', { tagUrl, timesTamp });
                 const envValue = (0, utils_1.getEnvValueByBranch)(topRepositoryName, branch)
                     || (0, utils_1.getEnvValueByBranch)(outRepository, branch);
+                console.log('[stringify] getEnvValueByBranch 尝试顺序', [
+                    `${topRepositoryName} + ${branch}`,
+                    `${outRepository} + ${branch}`
+                ]);
                 console.log('envValue: ', envValue);
                 if (!envValue) {
                     core.setFailed(`${outRepository} ${branch} 环境变量不存在`);
                     return;
                 }
                 const tagName = `${outRepository}/${branch}/${timesTamp}`;
+                const pushRef = (0, utils_1.getEnvPathByBranch)(branch);
+                console.log('[stringify] getEnvPathByBranch(branch)', { branch, pushRef });
                 const tagMessage = {
                     branch,
                     repository: outRepository,
-                    pushRef: (0, utils_1.getEnvPathByBranch)(branch),
+                    pushRef,
                     pusherName,
                     envValue
                 };
@@ -96,6 +166,10 @@ function run() {
                 console.log('tagUrl: ', tagUrl);
                 console.log('tagMessage: ', tagMessage);
                 console.log('githubToken:***** ', `Bearer ${githubToken}`);
+                console.log('[stringify] POST release 请求体摘要', {
+                    tag_name: tagName,
+                    bodyLength: JSON.stringify(tagMessage).length
+                });
                 const ret = yield (0, axios_1.default)({
                     method: 'POST',
                     headers: {
@@ -110,10 +184,16 @@ function run() {
                     }
                 });
                 console.log('ret------: ', ret.data);
+                console.log('[stringify] 完成, release id / html_url 如有则见 ret.data');
             }
             if (type === 'parse') {
+                console.log('[parse] 开始解析 release body');
                 const { release } = pushPayload || {};
                 const { body } = release || {};
+                console.log('[parse] release.body 是否存在 / 长度', {
+                    hasBody: Boolean(body),
+                    bodyLength: typeof body === 'string' ? body.length : 0
+                });
                 const tagInfo = JSON.parse(body);
                 console.log('tagInfo: ', tagInfo);
                 const { branch: tagBranch, repository: tagRepository, pusherName, pushRef, envValue, } = tagInfo || {};
@@ -125,18 +205,169 @@ function run() {
                 core.exportVariable('BRANCH', tagBranch);
                 core.exportVariable('REPOSITORY', tagRepository);
                 core.exportVariable('PUSHREF', pushRef);
+                const envKeys = Object.keys(envValue || {});
+                console.log('[parse] 即将 exportVariable 的 env 键数量', envKeys.length, envKeys);
                 Object.keys(envValue).forEach((key) => {
                     core.exportVariable(key, envValue[key]);
                 });
+                console.log('[parse] exportVariable 完成');
             }
         }
         catch (error) {
             const e = error;
+            console.log('[error]', e === null || e === void 0 ? void 0 : e.message, e === null || e === void 0 ? void 0 : e.status, (_a = e === null || e === void 0 ? void 0 : e.response) === null || _a === void 0 ? void 0 : _a.data);
+            if (e === null || e === void 0 ? void 0 : e.stack) {
+                console.log('[error] stack', e.stack);
+            }
             core.setFailed(e.message);
         }
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 1893:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resolveBranchFromTopTag = resolveBranchFromTopTag;
+exports.pushBranchToTagCommit = pushBranchToTagCommit;
+function parseOwnerRepo(full) {
+    const [owner, repo] = full.split('/');
+    if (!owner || !repo) {
+        throw new Error(`无效的仓库名 "${full}"，应为 owner/repo`);
+    }
+    return { owner, repo };
+}
+/**
+ * 从 topRepository 上指定 Release tag 的 body 解析 branch；body 非 JSON 时尝试按 tag 名
+ * `{repository}/{branch}/{timestamp}` 解析中间段为 branch。
+ */
+function resolveBranchFromTopTag(octokit, topRepository, topTagName) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b, _c;
+        const { owner, repo } = parseOwnerRepo(topRepository);
+        console.log('[topTagPush] resolveBranchFromTopTag 请求', { owner, repo, topTagName });
+        const { data: release } = yield octokit.rest.repos.getReleaseByTag({
+            owner,
+            repo,
+            tag: topTagName
+        });
+        console.log('[topTagPush] getReleaseByTag 返回', {
+            tag_name: release.tag_name,
+            name: release.name,
+            bodyLength: (_b = (_a = release.body) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0,
+            target_commitish: release.target_commitish
+        });
+        let parsed = {};
+        if ((_c = release.body) === null || _c === void 0 ? void 0 : _c.trim()) {
+            try {
+                parsed = JSON.parse(release.body);
+                console.log('[topTagPush] Release body 已解析为 JSON, keys', Object.keys(parsed));
+            }
+            catch (_d) {
+                throw new Error(`Release「${topTagName}」的 body 不是合法 JSON`);
+            }
+        }
+        else {
+            console.log('[topTagPush] Release body 为空，将仅尝试从 tag 名解析 branch');
+        }
+        let branch = typeof parsed.branch === 'string' ? parsed.branch : '';
+        if (branch) {
+            console.log('[topTagPush] branch 来自 Release body JSON', { branch });
+        }
+        if (!branch) {
+            const parts = topTagName.split('/');
+            if (parts.length >= 3) {
+                branch = parts[1] || '';
+            }
+            if (branch) {
+                console.log('[topTagPush] branch 来自 tag 名分段', { parts, branch });
+            }
+        }
+        if (!branch) {
+            throw new Error(`无法从 tag「${topTagName}」解析分支：请在 Release body 的 JSON 中提供 branch，或使用 {仓库名}/{分支名}/{时间戳} 格式的 tag`);
+        }
+        console.log('[topTagPush] resolveBranchFromTopTag 成功', { branch });
+        return { branch, body: parsed };
+    });
+}
+/** 将 tag 指向的提交写回 refs/heads/{branch}（不存在则创建），等效于把该分支推到 tag 所在提交 */
+function pushBranchToTagCommit(octokit, topRepository, topTagName, branch) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { owner, repo } = parseOwnerRepo(topRepository);
+        console.log('[topTagPush] pushBranchToTagCommit 开始', {
+            owner,
+            repo,
+            topTagName,
+            branch
+        });
+        const { data: refData } = yield octokit.rest.git.getRef({
+            owner,
+            repo,
+            ref: `tags/${topTagName}`
+        });
+        console.log('[topTagPush] git.getRef tags/*', {
+            ref: refData.ref,
+            objectType: refData.object.type,
+            objectSha: refData.object.sha
+        });
+        let sha;
+        if (refData.object.type === 'tag') {
+            const { data: tagData } = yield octokit.rest.git.getTag({
+                owner,
+                repo,
+                tag_sha: refData.object.sha
+            });
+            sha = tagData.object.sha;
+            console.log('[topTagPush] annotated tag 解析到 commit sha', { sha });
+        }
+        else {
+            sha = refData.object.sha;
+            console.log('[topTagPush] lightweight tag / 直接指向 commit', { sha });
+        }
+        try {
+            yield octokit.rest.git.updateRef({
+                owner,
+                repo,
+                ref: `heads/${branch}`,
+                sha,
+                force: true
+            });
+            console.log('[topTagPush] git.updateRef 成功', { ref: `heads/${branch}`, sha });
+        }
+        catch (e) {
+            const status = e.status;
+            console.log('[topTagPush] git.updateRef 失败', { status, branch, sha });
+            if (status === 404 || status === 422) {
+                console.log('[topTagPush] 尝试 git.createRef', { ref: `refs/heads/${branch}`, sha });
+                yield octokit.rest.git.createRef({
+                    owner,
+                    repo,
+                    ref: `refs/heads/${branch}`,
+                    sha
+                });
+                console.log('[topTagPush] git.createRef 成功');
+            }
+            else {
+                throw e;
+            }
+        }
+    });
+}
 
 
 /***/ }),
@@ -303,6 +534,15 @@ const getEnvValueByBranch = (repository, branch) => {
                 PORT1: 9011,
                 OUT_PORT1: 9011,
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+            },
+            prod: {
+                NAME: 'think-and-speak-api-prod',
+                ACTIVE: 'prod',
+                PORT: 9001,
+                OUT_PORT: 9001,
+                PORT1: 9011,
+                OUT_PORT1: 9011,
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
             }
         },
         [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {

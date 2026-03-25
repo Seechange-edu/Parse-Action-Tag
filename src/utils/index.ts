@@ -95,7 +95,8 @@ enum RepositoryEnum {
   OFFICIAL_WEBSITE = 'official_website',
   NEXUS_AI_FRONTEND = 'act-nexus-ai-frontend',
   NEXUS_AI_BACKEND = 'act-nexus-ai-backend',
-  SFS = 'smart_file_system'
+  SFS = 'smart_file_system',
+  AI_TUTOR = 'ai-tutor-backend'
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
@@ -155,6 +156,15 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         PORT1: 9011,
         OUT_PORT1: 9011,
         RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+      },
+      prod: {
+        NAME: 'think-and-speak-api-prod',
+        ACTIVE: 'prod',
+        PORT: 9001,
+        OUT_PORT: 9001,
+        PORT1: 9011,
+        OUT_PORT1: 9011,
+        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
     [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
@@ -307,6 +317,26 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         OUT_PORT: 28002
       }
     },
+    [RepositoryEnum.AI_TUTOR]: {
+      dev: {
+        NAME: 'ai-tutor-backend-dev',
+        ACTIVE: 'dev',
+        PORT: 8001,
+        OUT_PORT: 18001
+      },
+    },
+    uat: {
+      NAME: 'ai-tutor-backend-uat',
+      ACTIVE: 'uat',
+      PORT: 8001,
+      OUT_PORT: 8001
+    },
+    prod: {
+      NAME: 'ai-tutor-backend-prod',
+      ACTIVE: 'prod',
+      PORT: 8001,
+      OUT_PORT: 8001
+    }
   }
   const envValueMap = repositoryMap[repository as keyof typeof repositoryMap] || null
   if (!envValueMap) {
