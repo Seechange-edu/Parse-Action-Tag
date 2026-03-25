@@ -23,12 +23,14 @@ async function run(): Promise<void> {
     const topRepository: string = core.getInput('repository')
     const githubToken: string = core.getInput('githubToken')
     const topTagName: string = core.getInput('tagName')
+    const tagBranchInput: string = core.getInput('tagBranch')
     const teamsWebhook: string = core.getInput('teamsUrl')
     const type: string = core.getInput('type')
     console.log('[stringify/parse] inputs', {
       type,
       repository: topRepository || '(empty)',
       tagName: topTagName || '(empty)',
+      tagBranch: tagBranchInput || '(empty)',
       githubToken: githubToken ? `set(len=${githubToken.length})` : '(empty)'
     })
     console.log('[context] ref', ref)
@@ -54,7 +56,12 @@ async function run(): Promise<void> {
         const topRepo = topRepository.trim()
         const tag = topTagName.trim()
         console.log('[stringify][tagName] topRepo, tag', {topRepo, tag})
-        const resolved = await resolveBranchFromTopTag(octokit, topRepo, tag)
+        const resolved = await resolveBranchFromTopTag(
+          octokit,
+          topRepo,
+          tag,
+          tagBranchInput
+        )
         const tagResolvedBranch = resolved.branch
         console.log('[stringify][tagName] resolveBranchFromTopTag 结果', {
           tagResolvedBranch,

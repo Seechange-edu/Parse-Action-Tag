@@ -10,14 +10,17 @@ inputs:
     description: "给模板repository打tag, 默认是当前repository"
   githubToken:
     required: true
-    description: "github仓库的访问权限token"
+    description: "GitHub token；访问 top 仓库 Release / git 时需对该仓库有权限。跨仓库或私有库若权限不足，Release API 会 404（与是否已创建 Release 无关）"
   type:
     required: false
     description: "当前的类型是parse还是stringify"
     default: "parse"
   tagName:
     required: false
-    description: "top 仓库（repository）上已有 Release 的 tag；若设置则从该 Release 解析分支并把该分支更新到与 tag 相同提交"
+    description: "top 仓库（repository）上的 tag 名；有 GitHub Release 时从 body 解析分支，否则需为 {仓库}/{分支}/{时间戳}、附注 tag(JSON) 或配合 tagBranch"
+  tagBranch:
+    required: false
+    description: "当 tag 仅有 git 标记、无 Release 且无法从 tag 名/附注解析时，指定要更新到该 tag 提交的分支名（如 main、master、prod）"
   runCommand:
     required: false
     description: "执行的命令"
