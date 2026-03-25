@@ -23,6 +23,7 @@ async function run(): Promise<void> {
     const topRepository: string = core.getInput('repository')
     const githubToken: string = core.getInput('githubToken')
     const topTagName: string = core.getInput('tagName')
+    const teamsWebhook: string = core.getInput('teamsUrl')
     const type: string = core.getInput('type')
     console.log('[stringify/parse] inputs', {
       type,
@@ -185,6 +186,8 @@ async function run(): Promise<void> {
       Object.keys(envValue).forEach((key) => {
         core.exportVariable(key, envValue[key])
       })
+      // 发送 teams 消息
+      core.exportVariable('TEAMS_WEBHOOK', teamsWebhook)
       console.log('[parse] exportVariable 完成')
     }
   } catch (error) {

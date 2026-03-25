@@ -69,6 +69,7 @@ function run() {
             const topRepository = core.getInput('repository');
             const githubToken = core.getInput('githubToken');
             const topTagName = core.getInput('tagName');
+            const teamsWebhook = core.getInput('teamsUrl');
             const type = core.getInput('type');
             console.log('[stringify/parse] inputs', {
                 type,
@@ -210,6 +211,8 @@ function run() {
                 Object.keys(envValue).forEach((key) => {
                     core.exportVariable(key, envValue[key]);
                 });
+                // 发送 teams 消息
+                core.exportVariable('TEAMS_WEBHOOK', teamsWebhook);
                 console.log('[parse] exportVariable 完成');
             }
         }
