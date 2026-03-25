@@ -476,6 +476,7 @@ var RepositoryEnum;
     RepositoryEnum["NEXUS_AI_FRONTEND"] = "act-nexus-ai-frontend";
     RepositoryEnum["NEXUS_AI_BACKEND"] = "act-nexus-ai-backend";
     RepositoryEnum["SFS"] = "smart_file_system";
+    RepositoryEnum["AI_TUTOR"] = "ai-tutor-backend";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
     const repositoryMap = {
@@ -695,6 +696,26 @@ const getEnvValueByBranch = (repository, branch) => {
                 OUT_PORT: 28002
             }
         },
+        [RepositoryEnum.AI_TUTOR]: {
+            dev: {
+                NAME: 'ai-tutor-backend-dev',
+                ACTIVE: 'dev',
+                PORT: 8001,
+                OUT_PORT: 18001
+            },
+            uat: {
+                NAME: 'ai-tutor-backend-uat',
+                ACTIVE: 'uat',
+                PORT: 8001,
+                OUT_PORT: 8001
+            },
+            prod: {
+                NAME: 'ai-tutor-backend-prod',
+                ACTIVE: 'prod',
+                PORT: 8001,
+                OUT_PORT: 8001
+            }
+        }
     };
     const envValueMap = repositoryMap[repository] || null;
     if (!envValueMap) {

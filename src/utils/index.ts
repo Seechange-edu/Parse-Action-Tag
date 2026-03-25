@@ -324,18 +324,18 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         PORT: 8001,
         OUT_PORT: 18001
       },
-    },
-    uat: {
-      NAME: 'ai-tutor-backend-uat',
-      ACTIVE: 'uat',
-      PORT: 8001,
-      OUT_PORT: 8001
-    },
-    prod: {
-      NAME: 'ai-tutor-backend-prod',
-      ACTIVE: 'prod',
-      PORT: 8001,
-      OUT_PORT: 8001
+      uat: {
+        NAME: 'ai-tutor-backend-uat',
+        ACTIVE: 'uat',
+        PORT: 8001,
+        OUT_PORT: 8001
+      },
+      prod: {
+        NAME: 'ai-tutor-backend-prod',
+        ACTIVE: 'prod',
+        PORT: 8001,
+        OUT_PORT: 8001
+      }
     }
   }
   const envValueMap = repositoryMap[repository as keyof typeof repositoryMap] || null
