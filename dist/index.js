@@ -257,14 +257,26 @@ function parseOwnerRepo(full) {
     }
     return { owner, repo };
 }
-/** 附注 tag 的 message 若为 JSON 且含 branch，则取出 */
+/** 附注 tag 的 message 若为 JSON 且含 branch，则取出。getRef 404 时返回空（无权限与 tag 不存在在 GitHub 上均为 404） */
 function branchFromAnnotatedTagMessage(octokit, owner, repo, topTagName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { data: refData } = yield octokit.rest.git.getRef({
-            owner,
-            repo,
-            ref: `tags/${topTagName}`
-        });
+        let refData;
+        try {
+            const res = yield octokit.rest.git.getRef({
+                owner,
+                repo,
+                ref: `tags/${topTagName}`
+            });
+            refData = res.data;
+        }
+        catch (e) {
+            const status = e.status;
+            if (status === 404) {
+                console.log('[topTagPush] git.getRef tags/* 返回 404：无法读取该 tag（可能 tag 不存在，或 token 无权访问该仓库；私有库无权限时与 getReleaseByTag 404 常同时出现）');
+                return '';
+            }
+            throw e;
+        }
         if (refData.object.type !== 'tag') {
             return '';
         }
@@ -351,20 +363,16 @@ function resolveBranchFromTopTag(octokit, topRepository, topTagName, fallbackBra
             }
         }
         if (!branch) {
-            try {
-                branch = yield branchFromAnnotatedTagMessage(octokit, owner, repo, topTagName);
-            }
-            catch (refErr) {
-                const st = refErr.status;
-                console.log('[topTagPush] 读取 git tag 失败（可能 tag 不存在）', { status: st });
-                throw refErr;
-            }
+            branch = yield branchFromAnnotatedTagMessage(octokit, owner, repo, topTagName);
             if (branch) {
                 console.log('[topTagPush] branch 来自附注 tag 的 JSON message', { branch });
             }
         }
         if (!branch) {
-            throw new Error(`无法从 tag「${topTagName}」解析要更新的分支名。可选方式：1) 在仓库为该 tag 创建 GitHub Release，并在 body 中写 JSON（含 branch），且确保 githubToken 对该仓库可读（私有库无权限时 API 会 404）；2) 使用 {仓库名}/{分支名}/{时间戳} 格式的 tag；3) 使用附注 tag，message 为含 branch 的 JSON；4) 设置 action 输入 tagBranch（如 v3.0.1 等语义化 tag）`);
+            throw new Error(`无法从 tag「${topTagName}」解析要更新的分支名（${owner}/${repo}）。若 getReleaseByTag 与 git.getRef 均 404，多半是 githubToken 对该仓库无读取权限（界面仍可见 Release）；请换用对该仓库有 repo / contents:read 权限的 PAT。` +
+                `解析成功后，更新分支 ref 还需要 contents:write。` +
+                `也可临时设置 tagBranch，但仍需 token 能访问该仓库才能完成后续步骤。` +
+                `其他方式：Release body JSON 含 branch；{仓库}/{分支}/{时间戳} 格式 tag；附注 tag 的 JSON message 含 branch。`);
         }
         console.log('[topTagPush] resolveBranchFromTopTag 成功', { branch });
         return { branch, body: parsed };
@@ -380,11 +388,23 @@ function pushBranchToTagCommit(octokit, topRepository, topTagName, branch) {
             topTagName,
             branch
         });
-        const { data: refData } = yield octokit.rest.git.getRef({
-            owner,
-            repo,
-            ref: `tags/${topTagName}`
-        });
+        let refData;
+        try {
+            const res = yield octokit.rest.git.getRef({
+                owner,
+                repo,
+                ref: `tags/${topTagName}`
+            });
+            refData = res.data;
+        }
+        catch (e) {
+            const status = e.status;
+            if (status === 404) {
+                throw new Error(`pushBranchToTagCommit：无法读取 ${owner}/${repo} 的 tag「${topTagName}」（git.getRef 404）。` +
+                    `请使用对该仓库有 contents:read 的 token（跨仓库时不能用默认 GITHUB_TOKEN）；更新分支还需 contents:write。`);
+            }
+            throw e;
+        }
         console.log('[topTagPush] git.getRef tags/*', {
             ref: refData.ref,
             objectType: refData.object.type,
