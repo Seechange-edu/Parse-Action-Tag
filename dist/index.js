@@ -274,6 +274,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 PORT: 3000,
                 OUT_PORT: 3003
             },
+            prod: {
+                NAME: 'cms-prod',
+                ACTIVE: 'prod',
+                PORT: 3000,
+                OUT_PORT: 3003
+            }
         },
         [RepositoryEnum.CMS_BACKEND]: {
             dev: {
@@ -291,6 +297,13 @@ const getEnvValueByBranch = (repository, branch) => {
                 PORT: 9003,
                 OUT_PORT: 9003,
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
+            },
+            prod: {
+                NAME: 'cms-api-prod',
+                ACTIVE: 'prod',
+                PORT: 9003,
+                OUT_PORT: 9003,
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-cms-api.seechange-edu.com/logs:/app/logs'
             }
         },
         [RepositoryEnum.THINK_AND_SPEAK_BACKEND]: {
@@ -341,6 +354,13 @@ const getEnvValueByBranch = (repository, branch) => {
                 // IMAGE: 'registry.digitalocean.com/seechange/speaking-exercise-web:uat',
                 PORT: 3000,
                 OUT_PORT: 3000
+            },
+            prod: {
+                PREV_NAME: 'speaking-exercise-web-prod',
+                NAME: 'think-and-speak-web-prod',
+                ACTIVE: 'prod',
+                PORT: 3000,
+                OUT_PORT: 3000
             }
         },
         [RepositoryEnum.EVENT_BACKEND]: {
@@ -359,6 +379,13 @@ const getEnvValueByBranch = (repository, branch) => {
                 PORT: 9002,
                 OUT_PORT: 9002,
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-event-api.seechange-edu.com/logs:/app/logs'
+            },
+            prod: {
+                NAME: 'event-api-prod',
+                ACTIVE: 'prod',
+                PORT: 9002,
+                OUT_PORT: 9002,
+                RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-event-api.seechange-edu.com/logs:/app/logs'
             }
         },
         [RepositoryEnum.EVENT_FRONTEND]: {
@@ -373,6 +400,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 NAME: 'scmun-uat',
                 ACTIVE: 'uat',
                 // IMAGE: 'registry.digitalocean.com/seechange/scmun:uat',
+                PORT: 3000,
+                OUT_PORT: 3002
+            },
+            prod: {
+                NAME: 'scmun-prod',
+                ACTIVE: 'prod',
                 PORT: 3000,
                 OUT_PORT: 3002
             },
@@ -419,6 +452,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 // IMAGE: 'registry.digitalocean.com/seechange/official-website:uat',
                 PORT: 3000,
                 OUT_PORT: 3007
+            },
+            prod: {
+                NAME: 'official-website-prod',
+                ACTIVE: 'prod',
+                PORT: 3000,
+                OUT_PORT: 3007
             }
         },
         [RepositoryEnum.NEXUS_AI_FRONTEND]: {
@@ -438,7 +477,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 NAME: 'nexus-ai-frontend-prod',
                 ACTIVE: 'prod',
                 PORT: 80,
-                OUT_PORT: 80
+                OUT_PORT: 5173
             }
         },
         [RepositoryEnum.NEXUS_AI_BACKEND]: {
