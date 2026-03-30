@@ -28,7 +28,8 @@ async function run(): Promise<void> {
     const remoteHost: string = core.getInput('remoteHost')
 
     if (type === 'stringify') {
-        const branch = getBranchByHead(ref) || getBranchByTag(ref)
+        const branchFromRef = getBranchByHead(ref) || getBranchByTag(ref)
+        const branch = branchFromRef || topTagName.trim()
         const {repository, pusher} = pushPayload || {}
         const {full_name} = repository || {}
         const {name: pusherName} = pusher || {}
@@ -50,7 +51,7 @@ async function run(): Promise<void> {
   
         const tagName = `${outRepository}/${branch}/${timesTamp}`
         const tagMessage = {
-          branch: topTagName ? topTagName.trim() : branch,
+          branch,
           repository: outRepository,
           pushRef: getEnvPathByBranch(topTagName ? 'prod' : branch),
           pusherName,
