@@ -134,6 +134,7 @@ async function run(): Promise<void> {
       console.log('[stringify] getEnvPathByBranch(branch)', {branch, pushRef})
       const tagMessage = {
         branch,
+        topTagName,
         repository: outRepository,
         pushRef,
         pusherName,
@@ -176,6 +177,7 @@ async function run(): Promise<void> {
       console.log('tagInfo: ', tagInfo)
       const {
         branch: tagBranch,
+        topTagName,
         repository: tagRepository,
         pusherName,
         pushRef,

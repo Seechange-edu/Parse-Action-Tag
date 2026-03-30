@@ -161,6 +161,7 @@ function run() {
                 console.log('[stringify] getEnvPathByBranch(branch)', { branch, pushRef });
                 const tagMessage = {
                     branch,
+                    topTagName,
                     repository: outRepository,
                     pushRef,
                     pusherName,
@@ -201,7 +202,7 @@ function run() {
                 });
                 const tagInfo = JSON.parse(body);
                 console.log('tagInfo: ', tagInfo);
-                const { branch: tagBranch, repository: tagRepository, pusherName, pushRef, envValue, remoteHost } = tagInfo || {};
+                const { branch: tagBranch, topTagName, repository: tagRepository, pusherName, pushRef, envValue, remoteHost } = tagInfo || {};
                 const refBranch = (topTagName === null || topTagName === void 0 ? void 0 : topTagName.trim()) ? topTagName.trim() : tagBranch;
                 console.log('Branch----', tagBranch);
                 console.log('refBranch----', refBranch);
