@@ -80,8 +80,8 @@ function run() {
                 console.log('topRepository: ', topRepository);
                 const tagUrl = (0, utils_1.getTagUrl)(topRepository || full_name);
                 const timesTamp = (0, utils_1.formatTime)(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}');
-                const envValue = (0, utils_1.getEnvValueByBranch)(topRepositoryName, branch)
-                    || (0, utils_1.getEnvValueByBranch)(outRepository, branch);
+                const envValue = (0, utils_1.getEnvValueByBranch)(topRepositoryName, topTagName ? 'prod' : branch)
+                    || (0, utils_1.getEnvValueByBranch)(outRepository, topTagName ? 'prod' : branch);
                 console.log('envValue: ', envValue);
                 if (!envValue) {
                     core.setFailed(`${outRepository} ${branch} 环境变量不存在`);

@@ -39,8 +39,8 @@ async function run(): Promise<void> {
         const tagUrl = getTagUrl(topRepository || full_name)
         const timesTamp = formatTime(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}')
   
-        const envValue = getEnvValueByBranch(topRepositoryName, branch)
-          || getEnvValueByBranch(outRepository, branch)
+        const envValue = getEnvValueByBranch(topRepositoryName, topTagName ? 'prod' : branch)
+          || getEnvValueByBranch(outRepository, topTagName ? 'prod' : branch)
         console.log('envValue: ', envValue)
   
         if (!envValue) {
