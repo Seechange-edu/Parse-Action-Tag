@@ -27,7 +27,6 @@ async function run(): Promise<void> {
     const teamsWebhook: string = core.getInput('teamsUrl')
     const type: string = core.getInput('type')
     const remoteHost: string = core.getInput('remoteHost')
-    const remoteSSHKey: string = core.getInput('remoteSSHKey')
     console.log('[stringify/parse] inputs', {
       type,
       repository: topRepository || '(empty)',
@@ -138,8 +137,9 @@ async function run(): Promise<void> {
         repository: outRepository,
         pushRef,
         pusherName,
-        envValue
-      }
+        envValue,
+        remoteHost
+    }
       console.log('tagName: ', tagName)
       console.log('tagUrl: ', tagUrl)
       console.log('tagMessage: ', tagMessage)
@@ -180,6 +180,7 @@ async function run(): Promise<void> {
         pusherName,
         pushRef,
         envValue,
+        remoteHost
       } = tagInfo || {}
       const refBranch = topTagName?.trim() ? topTagName.trim() : tagBranch
       console.log('Branch----', tagBranch)
@@ -189,13 +190,11 @@ async function run(): Promise<void> {
       console.log('pushRef----', pushRef)
       console.log('envValue---- ', JSON.stringify(envValue))
       console.log('remoteHost----', remoteHost)
-      console.log('remoteSSHKey----', remoteSSHKey)
 
       core.exportVariable('BRANCH', refBranch)
       core.exportVariable('REPOSITORY', tagRepository)
       core.exportVariable('PUSHREF', pushRef)
       core.exportVariable('REMOTE_HOST', remoteHost)
-      core.exportVariable('REMOTE_SSH_KEY', remoteSSHKey)
       const envKeys = Object.keys(envValue || {})
       console.log('[parse] 即将 exportVariable 的 env 键数量', envKeys.length, envKeys)
       Object.keys(envValue).forEach((key) => {

@@ -73,7 +73,6 @@ function run() {
             const teamsWebhook = core.getInput('teamsUrl');
             const type = core.getInput('type');
             const remoteHost = core.getInput('remoteHost');
-            const remoteSSHKey = core.getInput('remoteSSHKey');
             console.log('[stringify/parse] inputs', {
                 type,
                 repository: topRepository || '(empty)',
@@ -165,7 +164,8 @@ function run() {
                     repository: outRepository,
                     pushRef,
                     pusherName,
-                    envValue
+                    envValue,
+                    remoteHost
                 };
                 console.log('tagName: ', tagName);
                 console.log('tagUrl: ', tagUrl);
@@ -201,7 +201,7 @@ function run() {
                 });
                 const tagInfo = JSON.parse(body);
                 console.log('tagInfo: ', tagInfo);
-                const { branch: tagBranch, repository: tagRepository, pusherName, pushRef, envValue, } = tagInfo || {};
+                const { branch: tagBranch, repository: tagRepository, pusherName, pushRef, envValue, remoteHost } = tagInfo || {};
                 const refBranch = (topTagName === null || topTagName === void 0 ? void 0 : topTagName.trim()) ? topTagName.trim() : tagBranch;
                 console.log('Branch----', tagBranch);
                 console.log('refBranch----', refBranch);
@@ -210,12 +210,10 @@ function run() {
                 console.log('pushRef----', pushRef);
                 console.log('envValue---- ', JSON.stringify(envValue));
                 console.log('remoteHost----', remoteHost);
-                console.log('remoteSSHKey----', remoteSSHKey);
                 core.exportVariable('BRANCH', refBranch);
                 core.exportVariable('REPOSITORY', tagRepository);
                 core.exportVariable('PUSHREF', pushRef);
                 core.exportVariable('REMOTE_HOST', remoteHost);
-                core.exportVariable('REMOTE_SSH_KEY', remoteSSHKey);
                 const envKeys = Object.keys(envValue || {});
                 console.log('[parse] 即将 exportVariable 的 env 键数量', envKeys.length, envKeys);
                 Object.keys(envValue).forEach((key) => {
