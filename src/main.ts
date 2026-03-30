@@ -179,13 +179,15 @@ async function run(): Promise<void> {
         pushRef,
         envValue,
       } = tagInfo || {}
+      const refBranch = topTagName?.trim() ? topTagName.trim() : tagBranch
       console.log('Branch----', tagBranch)
+      console.log('refBranch----', refBranch)
       console.log('repository----', tagRepository)
       console.log('pusherName----', pusherName)
       console.log('pushRef----', pushRef)
       console.log('envValue---- ', JSON.stringify(envValue))
 
-      core.exportVariable('BRANCH', tagBranch)
+      core.exportVariable('BRANCH', refBranch)
       core.exportVariable('REPOSITORY', tagRepository)
       core.exportVariable('PUSHREF', pushRef)
       const envKeys = Object.keys(envValue || {})

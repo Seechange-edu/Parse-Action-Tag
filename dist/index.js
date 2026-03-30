@@ -200,12 +200,14 @@ function run() {
                 const tagInfo = JSON.parse(body);
                 console.log('tagInfo: ', tagInfo);
                 const { branch: tagBranch, repository: tagRepository, pusherName, pushRef, envValue, } = tagInfo || {};
+                const refBranch = (topTagName === null || topTagName === void 0 ? void 0 : topTagName.trim()) ? topTagName.trim() : tagBranch;
                 console.log('Branch----', tagBranch);
+                console.log('refBranch----', refBranch);
                 console.log('repository----', tagRepository);
                 console.log('pusherName----', pusherName);
                 console.log('pushRef----', pushRef);
                 console.log('envValue---- ', JSON.stringify(envValue));
-                core.exportVariable('BRANCH', tagBranch);
+                core.exportVariable('BRANCH', refBranch);
                 core.exportVariable('REPOSITORY', tagRepository);
                 core.exportVariable('PUSHREF', pushRef);
                 const envKeys = Object.keys(envValue || {});
