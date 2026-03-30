@@ -785,6 +785,12 @@ const getEnvValueByBranch = (repository, branch) => {
                 ACTIVE: 'uat',
                 PORT: 5000,
                 OUT_PORT: 28002
+            },
+            prod: {
+                NAME: 'smart-file-system-prod',
+                ACTIVE: 'prod',
+                PORT: 5000,
+                OUT_PORT: 8002
             }
         },
         [RepositoryEnum.AI_TUTOR]: {
