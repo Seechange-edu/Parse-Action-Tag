@@ -96,7 +96,8 @@ enum RepositoryEnum {
   NEXUS_AI_FRONTEND = 'act-nexus-ai-frontend',
   NEXUS_AI_BACKEND = 'act-nexus-ai-backend',
   SFS = 'smart_file_system',
-  AI_TUTOR = 'AI-Tutor-Backend'
+  AI_TUTOR = 'AI-Tutor-Backend',
+  SEECHANGE_SLIDESHOW = 'seechange-slides'
 }
 
 export const getEnvValueByBranch = (repository: string, branch: string): any => {
@@ -380,6 +381,26 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         ACTIVE: 'prod',
         PORT: 8001,
         OUT_PORT: 8001
+      }
+    },
+    [RepositoryEnum.SEECHANGE_SLIDESHOW]: {
+      dev: {
+        NAME: 'seechange-slideshow-dev',
+        ACTIVE: 'dev',
+        PORT: 80,
+        OUT_PORT: 15174
+      },
+      uat: {
+        NAME: 'seechange-slideshow-uat',
+        ACTIVE: 'uat',
+        PORT: 80,
+        OUT_PORT: 25174
+      },
+      prod: {
+        NAME: 'seechange-slideshow-prod',
+        ACTIVE: 'prod',
+        PORT: 80,
+        OUT_PORT: 5174
       }
     }
   }

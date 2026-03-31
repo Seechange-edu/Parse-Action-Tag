@@ -256,6 +256,7 @@ var RepositoryEnum;
     RepositoryEnum["NEXUS_AI_BACKEND"] = "act-nexus-ai-backend";
     RepositoryEnum["SFS"] = "smart_file_system";
     RepositoryEnum["AI_TUTOR"] = "AI-Tutor-Backend";
+    RepositoryEnum["SEECHANGE_SLIDESHOW"] = "seechange-slides";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const getEnvValueByBranch = (repository, branch) => {
     const repositoryMap = {
@@ -538,6 +539,26 @@ const getEnvValueByBranch = (repository, branch) => {
                 ACTIVE: 'prod',
                 PORT: 8001,
                 OUT_PORT: 8001
+            }
+        },
+        [RepositoryEnum.SEECHANGE_SLIDESHOW]: {
+            dev: {
+                NAME: 'seechange-slideshow-dev',
+                ACTIVE: 'dev',
+                PORT: 80,
+                OUT_PORT: 15174
+            },
+            uat: {
+                NAME: 'seechange-slideshow-uat',
+                ACTIVE: 'uat',
+                PORT: 80,
+                OUT_PORT: 25174
+            },
+            prod: {
+                NAME: 'seechange-slideshow-prod',
+                ACTIVE: 'prod',
+                PORT: 80,
+                OUT_PORT: 5174
             }
         }
     };
