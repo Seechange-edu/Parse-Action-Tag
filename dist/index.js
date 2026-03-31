@@ -276,7 +276,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 OUT_PORT: 3003
             },
             prod: {
-                NAME: 'cms-prod',
+                NAME: 'cms',
                 ACTIVE: 'prod',
                 PORT: 3000,
                 OUT_PORT: 3003
@@ -300,7 +300,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
             },
             prod: {
-                NAME: 'cms-api-prod',
+                NAME: 'cms-api',
                 ACTIVE: 'prod',
                 PORT: 9003,
                 OUT_PORT: 9003,
@@ -330,7 +330,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
             },
             prod: {
-                NAME: 'think-and-speak-api-prod',
+                NAME: 'think-and-speak-api',
                 ACTIVE: 'prod',
                 PORT: 9001,
                 OUT_PORT: 9001,
@@ -357,7 +357,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 OUT_PORT: 3000
             },
             prod: {
-                PREV_NAME: 'speaking-exercise-web-prod',
+                PREV_NAME: 'speaking-exercise-web',
                 NAME: 'think-and-speak-web-prod',
                 ACTIVE: 'prod',
                 PORT: 3000,
@@ -382,7 +382,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-event-api.seechange-edu.com/logs:/app/logs'
             },
             prod: {
-                NAME: 'event-api-prod',
+                NAME: 'event-api',
                 ACTIVE: 'prod',
                 PORT: 9002,
                 OUT_PORT: 9002,
@@ -405,7 +405,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 OUT_PORT: 3002
             },
             prod: {
-                NAME: 'scmun-prod',
+                NAME: 'scmun',
                 ACTIVE: 'prod',
                 PORT: 3000,
                 OUT_PORT: 3002
@@ -455,7 +455,7 @@ const getEnvValueByBranch = (repository, branch) => {
                 OUT_PORT: 3007
             },
             prod: {
-                NAME: 'official-website-prod',
+                NAME: 'official-website',
                 ACTIVE: 'prod',
                 PORT: 3000,
                 OUT_PORT: 3007
