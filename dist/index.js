@@ -417,11 +417,10 @@ const REPOSITORY_ENV_MAP = {
             PORT: 3000,
             OUT_PORT: 3002
         },
-        // 与 dev-aimcup 对称：pushRef=prod（通道），NAME=aimcup-prod（容器名）。
-        // ACTIVE 用 prod（与主站 prod 行一致），避免 top 误用 ACTIVE 拼成 …/aimcup-prod。
+        // NAME/ACTIVE=aimcup-prod（容器名）；ECR 路径用 IMAGE_REPO_SUBPATH=prod（act-event-frontend ci 会读）
         'prod-aimcup': {
             NAME: 'aimcup-prod',
-            ACTIVE: 'prod',
+            ACTIVE: 'aimcup-prod',
             PORT: 3000,
             OUT_PORT: 3009,
             ENV_FILE: 'prod-aimcup.env',
