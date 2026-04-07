@@ -6,7 +6,8 @@ import {
   getBranchByTag,
   getEnvPathByBranch,
   getEnvValueByBranch,
-  getTagUrl
+  getTagUrl,
+  resolveProdEnvBranchFromReleaseTag
 } from './utils'
 import {pushBranchToTagCommit, resolveBranchFromTopTag} from './topTagPush'
 
@@ -39,9 +40,14 @@ async function run(): Promise<void> {
         console.log('topRepository: ', topRepository)
         const tagUrl = getTagUrl(topRepository || full_name)
         const timesTamp = formatTime(new Date(), '{yy}-{mm}-{dd}-{h}-{i}-{s}')
-  
-        const envValue = getEnvValueByBranch(topRepositoryName, topTagName ? 'prod' : branch)
-          || getEnvValueByBranch(outRepository, topTagName ? 'prod' : branch)
+
+        const envLookupBranch = topTagName
+          ? resolveProdEnvBranchFromReleaseTag(topTagName)
+          : branch
+
+        const envValue =
+          getEnvValueByBranch(topRepositoryName, envLookupBranch) ||
+          getEnvValueByBranch(outRepository, envLookupBranch)
         console.log('envValue: ', envValue)
   
         if (!envValue) {
@@ -53,7 +59,7 @@ async function run(): Promise<void> {
         const tagMessage = {
           branch,
           repository: outRepository,
-          pushRef: getEnvPathByBranch(topTagName ? 'prod' : branch),
+          pushRef: getEnvPathByBranch(envLookupBranch),
           pusherName,
           envValue,
           remoteHost,

@@ -30,6 +30,9 @@ export const getSyncBranch = (ref: string): string => {
 }
 
 export const getEnvPathByBranch = (branch: string): string => {
+  if (branch === 'prod-aimcup') {
+    return 'prod'
+  }
   if (['dev', 'uat', 'prod'].includes(branch)) {
     return branch
   }
@@ -100,8 +103,7 @@ enum RepositoryEnum {
   SEECHANGE_SLIDESHOW = 'seechange-slides'
 }
 
-export const getEnvValueByBranch = (repository: string, branch: string): any => {
-  const repositoryMap = {
+const REPOSITORY_ENV_MAP = {
     [RepositoryEnum.CMS_FRONTEND]: {
       dev: {
         NAME: 'cms-dev',
@@ -251,6 +253,13 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
         ACTIVE: 'prod',
         PORT: 3000,
         OUT_PORT: 3002
+      },
+      'prod-aimcup': {
+        NAME: 'aimcup-prod',
+        ACTIVE: 'aimcup-prod',
+        PORT: 3000,
+        OUT_PORT: 3009,
+        ENV_FILE: 'prod-aimcup.env'
       },
       'dev-oxford':{
         NAME: 'dev-oxford',
@@ -404,11 +413,25 @@ export const getEnvValueByBranch = (repository: string, branch: string): any => 
       }
     }
   }
-  const envValueMap = repositoryMap[repository as keyof typeof repositoryMap] || null
+
+/**
+ * 发版 tag → 环境表键：仅判断 aimcup（含 `-aimcup` 即 prod-aimcup），其余一律 prod。
+ */
+export function resolveProdEnvBranchFromReleaseTag(topTagName: string): string {
+  const tag = topTagName.trim()
+  if (!tag) {
+    return 'prod'
+  }
+  return tag.includes('-aimcup') ? 'prod-aimcup' : 'prod'
+}
+
+export const getEnvValueByBranch = (repository: string, branch: string): any => {
+  const envValueMap =
+    REPOSITORY_ENV_MAP[repository as keyof typeof REPOSITORY_ENV_MAP] || null
   if (!envValueMap) {
     return null
   }
-  const envValue = envValueMap?.[branch as keyof typeof envValueMap] || envValueMap.dev 
+  const envValue = envValueMap?.[branch as keyof typeof envValueMap] || envValueMap.dev
   if (!envValue) {
     return null
   }
