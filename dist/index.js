@@ -193,7 +193,8 @@ const getSyncBranch = (ref) => {
 };
 exports.getSyncBranch = getSyncBranch;
 const getEnvPathByBranch = (branch) => {
-    if (branch === 'prod-aimcup') {
+    // prod-* 变体（如 prod-aimcup）走生产通道 prod，与 dev-* 归到 dev 同理
+    if (branch.startsWith('prod-') && branch.length > 'prod-'.length) {
         return 'prod';
     }
     if (['dev', 'uat', 'prod'].includes(branch)) {
@@ -416,12 +417,15 @@ const REPOSITORY_ENV_MAP = {
             PORT: 3000,
             OUT_PORT: 3002
         },
+        // 与 dev-aimcup 对称：pushRef=prod（通道），NAME=aimcup-prod（容器名）。
+        // ACTIVE 用 prod（与主站 prod 行一致），避免 top 误用 ACTIVE 拼成 …/aimcup-prod。
         'prod-aimcup': {
             NAME: 'aimcup-prod',
-            ACTIVE: 'aimcup-prod',
+            ACTIVE: 'prod',
             PORT: 3000,
             OUT_PORT: 3009,
-            ENV_FILE: 'prod-aimcup.env'
+            ENV_FILE: 'prod-aimcup.env',
+            IMAGE_REPO_SUBPATH: 'prod'
         },
         'dev-oxford': {
             NAME: 'dev-oxford',
