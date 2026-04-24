@@ -417,14 +417,25 @@ const REPOSITORY_ENV_MAP = {
             PORT: 3000,
             OUT_PORT: 3002
         },
-        // NAME/ACTIVE=aimcup-prod（容器名）；ECR 路径用 IMAGE_REPO_SUBPATH=prod（act-event-frontend ci 会读）
+        // 语义对齐 event-frontend/prod:<tag>：ECR 路径 prod（PUSHREF / IMAGE_REPO_SUBPATH），镜像 tag 用 IMAGE（ci.yml 里 IMAGE_TAG=$IMAGE）
         'prod-aimcup': {
             NAME: 'aimcup-prod',
             ACTIVE: 'aimcup-prod',
             PORT: 3000,
             OUT_PORT: 3009,
             ENV_FILE: 'prod-aimcup.env',
-            IMAGE_REPO_SUBPATH: 'prod'
+            IMAGE_REPO_SUBPATH: 'prod',
+            IMAGE: 'aimcup-prod'
+        },
+        // 语义同 prod-aimcup：ECR .../prod:scmun-school；发版 tag 如 school-v2.2.6 解析见 resolveProdEnvBranchFromReleaseTag
+        'prod-school': {
+            NAME: 'scmun-school',
+            ACTIVE: 'scmun-school',
+            PORT: 3000,
+            OUT_PORT: 3004,
+            ENV_FILE: 'prod.env',
+            IMAGE_REPO_SUBPATH: 'prod',
+            IMAGE: 'scmun-school'
         },
         'dev-oxford': {
             NAME: 'dev-oxford',
@@ -579,14 +590,20 @@ const REPOSITORY_ENV_MAP = {
     }
 };
 /**
- * 发版 tag → 环境表键：仅判断 aimcup（含 `-aimcup` 即 prod-aimcup），其余一律 prod。
+ * 发版 tag → 环境表键：`-aimcup` → prod-aimcup；含 `school`（如 school-v2.2.6、v1.0.0-school）→ prod-school；否则 prod。
  */
 function resolveProdEnvBranchFromReleaseTag(topTagName) {
     const tag = topTagName.trim();
     if (!tag) {
         return 'prod';
     }
-    return tag.includes('-aimcup') ? 'prod-aimcup' : 'prod';
+    if (tag.includes('-aimcup')) {
+        return 'prod-aimcup';
+    }
+    if (tag.toLowerCase().includes('school')) {
+        return 'prod-school';
+    }
+    return 'prod';
 }
 const getEnvValueByBranch = (repository, branch) => {
     const envValueMap = REPOSITORY_ENV_MAP[repository] || null;
