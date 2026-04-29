@@ -441,7 +441,7 @@ const REPOSITORY_ENV_MAP = {
             OUT_PORT: 3005
         },
         prod: {
-            NAME: 'think-and-speak-prod',
+            NAME: 'think-and-speak',
             ACTIVE: 'prod',
             PORT: 3000,
             OUT_PORT: 3005
