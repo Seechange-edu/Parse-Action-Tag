@@ -101,7 +101,8 @@ enum RepositoryEnum {
   NEXUS_AI_BACKEND = 'act-nexus-ai-backend',
   SFS = 'smart_file_system',
   AI_TUTOR = 'AI-Tutor-Backend',
-  SEECHANGE_SLIDESHOW = 'seechange-slides'
+  SEECHANGE_SLIDESHOW = 'seechange-slides',
+  THINK_AND_SPEAK = 'think-and-speak'
 }
 
 const REPOSITORY_ENV_MAP = {
@@ -425,6 +426,26 @@ const REPOSITORY_ENV_MAP = {
         PORT: 80,
         OUT_PORT: 5174
       }
+    },
+    [RepositoryEnum.THINK_AND_SPEAK]: {
+        dev: {
+            NAME: 'think-and-speak-dev',
+            ACTIVE: 'dev',
+            PORT: 3000,
+            OUT_PORT: 13005
+        },
+        uat: {
+            NAME: 'think-and-speak-uat',
+            ACTIVE: 'uat',
+            PORT: 3000,
+            OUT_PORT: 3005
+        },
+        prod: {
+            NAME: 'think-and-speak-prod',
+            ACTIVE: 'prod',
+            PORT: 3000,
+            OUT_PORT: 3005
+        }
     }
   }
 
