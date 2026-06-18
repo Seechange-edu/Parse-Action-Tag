@@ -182,7 +182,7 @@ const REPOSITORY_ENV_MAP = {
         OUT_PORT: 9001,
         PORT1: 9011,
         OUT_PORT1: 9011,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
     [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {

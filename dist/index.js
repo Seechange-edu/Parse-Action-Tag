@@ -344,7 +344,7 @@ const REPOSITORY_ENV_MAP = {
             OUT_PORT: 9001,
             PORT1: 9011,
             OUT_PORT1: 9011,
-            RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+            RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
         }
     },
     [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
@@ -2713,7 +2713,7 @@ const Context = __importStar(__nccwpck_require__(9944));
 const Utils = __importStar(__nccwpck_require__(7276));
 // octokit + plugins
 const core_1 = __nccwpck_require__(7590);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3261);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3656);
 const plugin_paginate_rest_1 = __nccwpck_require__(1571);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
@@ -5286,7 +5286,7 @@ paginateRest.VERSION = VERSION;
 
 /***/ }),
 
-/***/ 3261:
+/***/ 3656:
 /***/ ((module) => {
 
 "use strict";
