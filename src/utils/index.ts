@@ -182,7 +182,7 @@ const REPOSITORY_ENV_MAP = {
         OUT_PORT: 9001,
         PORT1: 9011,
         OUT_PORT1: 9011,
-        RUN_ARGS: '-m 3072m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 4096m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-think-and-speak-api.seechange-edu.com/logs:/app/logs'
       }
     },
     [RepositoryEnum.THINK_AND_SPEAK_FRONTEND]: {
@@ -392,19 +392,25 @@ const REPOSITORY_ENV_MAP = {
         NAME: 'ai-tutor-backend-dev',
         ACTIVE: 'dev',
         PORT: 8001,
-        OUT_PORT: 18001
+        OUT_PORT: 18001,
+        RUN_ARGS: '-m 1024m --memory-swap 1024m',
+        RUN_ARGS_WORKER: '-m 512m --memory-swap 512m'
       },
       uat: {
         NAME: 'ai-tutor-backend-uat',
         ACTIVE: 'uat',
         PORT: 8001,
-        OUT_PORT: 8001
+        OUT_PORT: 8001,
+        RUN_ARGS: '-m 1024m --memory-swap 1024m',
+        RUN_ARGS_WORKER: '-m 512m --memory-swap 512m'
       },
       prod: {
         NAME: 'ai-tutor-backend-prod',
         ACTIVE: 'prod',
         PORT: 8001,
-        OUT_PORT: 8001
+        OUT_PORT: 8001,
+        RUN_ARGS: '-m 2048m --memory-swap 2048m',
+        RUN_ARGS_WORKER: '-m 512m --memory-swap 512m'
       }
     },
     [RepositoryEnum.SEECHANGE_SLIDESHOW]: {
