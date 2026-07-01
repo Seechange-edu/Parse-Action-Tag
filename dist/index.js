@@ -324,7 +324,7 @@ const REPOSITORY_ENV_MAP = {
             OUT_PORT: 19001,
             PORT1: 9011,
             OUT_PORT1: 19011,
-            RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+            RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-think-and-speak-api.seechange-edu.com/logs:/app/logs'
         },
         uat: {
             NAME: 'think-and-speak-api-uat',
@@ -335,7 +335,7 @@ const REPOSITORY_ENV_MAP = {
             OUT_PORT: 9001,
             PORT1: 9011,
             OUT_PORT1: 9011,
-            RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
+            RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-think-and-speak-api.seechange-edu.com/logs:/app/logs'
         },
         prod: {
             NAME: 'think-and-speak-api',
