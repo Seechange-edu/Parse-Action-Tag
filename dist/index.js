@@ -514,19 +514,24 @@ const REPOSITORY_ENV_MAP = {
             NAME: 'nexus-ai-backend-dev',
             ACTIVE: 'dev',
             PORT: 8000,
-            OUT_PORT: 18000
+            OUT_PORT: 18000,
+            // Extra `docker run` args, injected as ${{ env.RUN_ARGS }}. Empty for now; fill to
+            // override/tune deploy (e.g. '-m 2048m -e KEY=val -v host:container') without touching CI.
+            RUN_ARGS: ''
         },
         uat: {
             NAME: 'nexus-ai-backend-uat',
             ACTIVE: 'uat',
             PORT: 8000,
-            OUT_PORT: 28000
+            OUT_PORT: 28000,
+            RUN_ARGS: ''
         },
         prod: {
             NAME: 'nexus-ai-backend-prod',
             ACTIVE: 'prod',
             PORT: 8000,
-            OUT_PORT: 8000
+            OUT_PORT: 8000,
+            RUN_ARGS: ''
         }
     },
     [RepositoryEnum.SFS]: {
