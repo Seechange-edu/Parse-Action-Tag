@@ -398,7 +398,7 @@ const REPOSITORY_ENV_MAP = {
         ACTIVE: 'dev',
         PORT: 8001,
         OUT_PORT: 18001,
-        RUN_ARGS: '-m 1024m --memory-swap 1024m',
+        RUN_ARGS: '-m 2048m --memory-swap 2048m',
         RUN_ARGS_WORKER: '-m 512m --memory-swap 512m'
       },
       uat: {
@@ -406,7 +406,7 @@ const REPOSITORY_ENV_MAP = {
         ACTIVE: 'uat',
         PORT: 8001,
         OUT_PORT: 8001,
-        RUN_ARGS: '-m 1024m --memory-swap 1024m',
+        RUN_ARGS: '-m 2048m --memory-swap 2048m',
         RUN_ARGS_WORKER: '-m 512m --memory-swap 512m'
       },
       prod: {
