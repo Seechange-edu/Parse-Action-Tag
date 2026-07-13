@@ -266,6 +266,7 @@ var RepositoryEnum;
     RepositoryEnum["AI_TUTOR"] = "AI-Tutor-Backend";
     RepositoryEnum["SEECHANGE_SLIDESHOW"] = "seechange-slides";
     RepositoryEnum["THINK_AND_SPEAK"] = "think-and-speak";
+    RepositoryEnum["HIRING_SCOUT"] = "hiring-scout";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const REPOSITORY_ENV_MAP = {
     [RepositoryEnum.CMS_FRONTEND]: {
@@ -618,6 +619,25 @@ const REPOSITORY_ENV_MAP = {
             ACTIVE: 'prod',
             PORT: 3000,
             OUT_PORT: 3005
+        }
+    },
+    [RepositoryEnum.HIRING_SCOUT]: {
+        // Node app; env is baked per-ACTIVE at build time by the Dockerfile (--build-arg ACTIVE), so no ENV_FILE here.
+        // push main -> dev (getEnvValueByBranch falls back to dev for unknown branches); publish Release -> prod.
+        dev: {
+            NAME: 'hiring-scout-dev',
+            ACTIVE: 'dev',
+            PORT: 5000,
+            OUT_PORT: 13015,
+            // Extra `docker run` args, injected as ${{ env.RUN_ARGS }}. Empty for now; fill to tune deploy without touching CI.
+            RUN_ARGS: ''
+        },
+        prod: {
+            NAME: 'hiring-scout',
+            ACTIVE: 'prod',
+            PORT: 5000,
+            OUT_PORT: 3015,
+            RUN_ARGS: ''
         }
     }
 };
