@@ -419,52 +419,43 @@ const REPOSITORY_ENV_MAP = {
             PORT: 3000,
             OUT_PORT: 3002
         },
-        // 语义对齐 event-frontend/prod:<tag>：ECR 路径 prod（PUSHREF / IMAGE_REPO_SUBPATH），镜像 tag 用 IMAGE（ci.yml 里 IMAGE_TAG=$IMAGE）
+        // prod 变体：ECR 路径走 PUSHREF（prod-* 都归到 prod），镜像 tag 用发版 tag（BRANCH），
+        // 即 prod:aimcup-v1.0.0——版本号可见。容器名/端口用 NAME/OUT_PORT 区分。
         'prod-aimcup': {
             NAME: 'aimcup-prod',
             ACTIVE: 'aimcup-prod',
             PORT: 3000,
             OUT_PORT: 3009,
-            ENV_FILE: 'prod-aimcup.env',
-            IMAGE_REPO_SUBPATH: 'prod',
-            IMAGE: 'aimcup-prod'
+            ENV_FILE: 'prod-aimcup.env'
         },
         'prod-oxford': {
             NAME: 'oxford-prod',
             ACTIVE: 'oxford-prod',
             PORT: 3000,
             OUT_PORT: 3010,
-            ENV_FILE: 'prod-oxford.env',
-            IMAGE_REPO_SUBPATH: 'prod',
-            IMAGE: 'oxford-prod'
+            ENV_FILE: 'prod-oxford.env'
         },
         'prod-ipdc': {
             NAME: 'ipdc-prod',
             ACTIVE: 'ipdc-prod',
             PORT: 3000,
             OUT_PORT: 3013,
-            ENV_FILE: 'prod-ipdc.env',
-            IMAGE_REPO_SUBPATH: 'prod',
-            IMAGE: 'ipdc-prod'
+            ENV_FILE: 'prod-ipdc.env'
         },
         'prod-ipdc-judge': {
             NAME: 'ipdc-judge-prod',
             ACTIVE: 'ipdc-judge-prod',
             PORT: 3000,
             OUT_PORT: 3014,
-            ENV_FILE: 'prod-ipdc-judge.env',
-            IMAGE_REPO_SUBPATH: 'prod',
-            IMAGE: 'ipdc-judge-prod'
+            ENV_FILE: 'prod-ipdc-judge.env'
         },
-        // 语义同 prod-aimcup：ECR .../prod:scmun-school；发版 tag 如 school-v2.2.6 解析见 resolveProdEnvBranchFromReleaseTag
+        // 发版 tag 如 school-v2.2.6 → prod-school，镜像 prod:school-v2.2.6（解析见 resolveProdEnvBranchFromReleaseTag）
         'prod-school': {
             NAME: 'scmun-school',
             ACTIVE: 'scmun-school',
             PORT: 3000,
             OUT_PORT: 3004,
-            ENV_FILE: 'prod.env',
-            IMAGE_REPO_SUBPATH: 'prod',
-            IMAGE: 'scmun-school'
+            ENV_FILE: 'prod.env'
         },
         'dev-oxford': {
             NAME: 'dev-oxford',
@@ -669,17 +660,31 @@ const REPOSITORY_ENV_MAP = {
     }
 };
 /**
- * 发版 tag → 环境表键：`-aimcup` → prod-aimcup；含 `school`（如 school-v2.2.6、v1.0.0-school）→ prod-school；否则 prod。
+ * 发版 tag → 环境表键。按 tag 里含的变体关键字路由到对应 prod 变体，匹配前缀或后缀
+ * （如 aimcup-v1.0.0 或 v1.0.0-aimcup 都行）：
+ *   aimcup → prod-aimcup；ipdc-judge → prod-ipdc-judge；ipdc → prod-ipdc；
+ *   oxford → prod-oxford；school → prod-school；否则 prod。
+ * 顺序要紧：`ipdc-judge` 必须在 `ipdc` 之前判断，否则 ipdc-judge 的 tag 会被 ipdc 抢先命中。
  */
 function resolveProdEnvBranchFromReleaseTag(topTagName) {
-    const tag = topTagName.trim();
+    const tag = topTagName.trim().toLowerCase();
     if (!tag) {
         return 'prod';
     }
-    if (tag.includes('-aimcup')) {
+    if (tag.includes('aimcup')) {
         return 'prod-aimcup';
     }
-    if (tag.toLowerCase().includes('school')) {
+    // ipdc-judge before ipdc — 'ipdc-judge' 里也含 'ipdc'。
+    if (tag.includes('ipdc-judge')) {
+        return 'prod-ipdc-judge';
+    }
+    if (tag.includes('ipdc')) {
+        return 'prod-ipdc';
+    }
+    if (tag.includes('oxford')) {
+        return 'prod-oxford';
+    }
+    if (tag.includes('school')) {
         return 'prod-school';
     }
     return 'prod';
