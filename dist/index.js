@@ -429,6 +429,33 @@ const REPOSITORY_ENV_MAP = {
             IMAGE_REPO_SUBPATH: 'prod',
             IMAGE: 'aimcup-prod'
         },
+        'prod-oxford': {
+            NAME: 'oxford-prod',
+            ACTIVE: 'oxford-prod',
+            PORT: 3000,
+            OUT_PORT: 3010,
+            ENV_FILE: 'prod-oxford.env',
+            IMAGE_REPO_SUBPATH: 'prod',
+            IMAGE: 'oxford-prod'
+        },
+        'prod-ipdc': {
+            NAME: 'ipdc-prod',
+            ACTIVE: 'ipdc-prod',
+            PORT: 3000,
+            OUT_PORT: 3013,
+            ENV_FILE: 'prod-ipdc.env',
+            IMAGE_REPO_SUBPATH: 'prod',
+            IMAGE: 'ipdc-prod'
+        },
+        'prod-ipdc-judge': {
+            NAME: 'ipdc-judge-prod',
+            ACTIVE: 'ipdc-judge-prod',
+            PORT: 3000,
+            OUT_PORT: 3014,
+            ENV_FILE: 'prod-ipdc-judge.env',
+            IMAGE_REPO_SUBPATH: 'prod',
+            IMAGE: 'ipdc-judge-prod'
+        },
         // 语义同 prod-aimcup：ECR .../prod:scmun-school；发版 tag 如 school-v2.2.6 解析见 resolveProdEnvBranchFromReleaseTag
         'prod-school': {
             NAME: 'scmun-school',
