@@ -136,7 +136,7 @@ const REPOSITORY_ENV_MAP = {
         // IMAGE: 'registry.digitalocean.com/seechange/cms-api:dev',
         PORT: 9003,
         OUT_PORT: 19003,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-cms-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=dev -v /home/forge/dev-cms-api.seechange-edu.com/logs:/app/logs'
       },
       uat: {
         NAME: 'cms-api-uat',
@@ -144,14 +144,14 @@ const REPOSITORY_ENV_MAP = {
         // IMAGE: 'registry.digitalocean.com/seechange/cms-api:uat',
         PORT: 9003,
         OUT_PORT: 9003,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=uat -v /home/forge/uat-cms-api.seechange-edu.com/logs:/app/logs'
       },
       prod: {
         NAME: 'cms-api',
         ACTIVE: 'prod',
         PORT: 9003,
         OUT_PORT: 9003,
-        RUN_ARGS: '-m 1024m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-cms-api.seechange-edu.com/logs:/app/logs'
+        RUN_ARGS: '-m 2048m -e SPRING_PROFILES_ACTIVE=prod -v /home/forge/prod-cms-api.seechange-edu.com/logs:/app/logs'
       }
     },
     [RepositoryEnum.THINK_AND_SPEAK_BACKEND]: {
