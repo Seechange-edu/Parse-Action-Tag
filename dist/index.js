@@ -267,6 +267,7 @@ var RepositoryEnum;
     RepositoryEnum["SEECHANGE_SLIDESHOW"] = "seechange-slides";
     RepositoryEnum["THINK_AND_SPEAK"] = "think-and-speak";
     RepositoryEnum["HIRING_SCOUT"] = "hiring-scout";
+    RepositoryEnum["API_METER"] = "api-meter";
 })(RepositoryEnum || (RepositoryEnum = {}));
 const REPOSITORY_ENV_MAP = {
     [RepositoryEnum.CMS_FRONTEND]: {
@@ -656,6 +657,57 @@ const REPOSITORY_ENV_MAP = {
             PORT: 5000,
             OUT_PORT: 3015,
             RUN_ARGS: ''
+        }
+    },
+    [RepositoryEnum.API_METER]: {
+        // Monorepo with three containers: the backend image runs twice, as the
+        // admin API and as the proxy applications call, chosen by SERVICE. The
+        // frontend is its own image.
+        //
+        // They are split because the proxy sits in front of paid API calls and a
+        // heavy report query in admin must never add latency to it.
+        //
+        // Every key here is exported as an env var by `parse`, which is how
+        // act-api-meter's ci.yml addresses all three. NAME/PORT/OUT_PORT/RUN_ARGS
+        // keep their usual meaning and belong to admin; the other two carry a
+        // prefix.
+        //
+        // NETWORK is a user-defined docker network the three share, so the
+        // frontend's nginx can reach admin by container name. Without it
+        // proxy_pass has nothing to resolve.
+        dev: {
+            ACTIVE: 'dev',
+            NETWORK: 'api-meter-dev',
+            NAME: 'api-meter-admin-dev',
+            PORT: 8000,
+            OUT_PORT: 18003,
+            RUN_ARGS: '-m 1024m',
+            PROXY_NAME: 'api-meter-proxy-dev',
+            PROXY_PORT: 8000,
+            PROXY_OUT_PORT: 18004,
+            PROXY_RUN_ARGS: '-m 1024m',
+            WEB_NAME: 'api-meter-web-dev',
+            WEB_PORT: 80,
+            WEB_OUT_PORT: 15175,
+            WEB_RUN_ARGS: ''
+        },
+        // No uat: this is a metering system, and a third environment would be a
+        // third set of keys to look after for no extra confidence.
+        prod: {
+            ACTIVE: 'prod',
+            NETWORK: 'api-meter-prod',
+            NAME: 'api-meter-admin',
+            PORT: 8000,
+            OUT_PORT: 8003,
+            RUN_ARGS: '-m 2048m',
+            PROXY_NAME: 'api-meter-proxy',
+            PROXY_PORT: 8000,
+            PROXY_OUT_PORT: 8004,
+            PROXY_RUN_ARGS: '-m 2048m',
+            WEB_NAME: 'api-meter-web',
+            WEB_PORT: 80,
+            WEB_OUT_PORT: 5175,
+            WEB_RUN_ARGS: ''
         }
     }
 };
