@@ -27,6 +27,7 @@ async function run(): Promise<void> {
     const teamsWebhook: string = core.getInput('teamsUrl')
     const type: string = core.getInput('type')
     const remoteHost: string = core.getInput('remoteHost')
+    const extra: string = core.getInput('extra')
 
     if (type === 'stringify') {
         const branchFromRef = getBranchByHead(ref) || getBranchByTag(ref)
@@ -45,15 +46,35 @@ async function run(): Promise<void> {
           ? resolveProdEnvBranchFromReleaseTag(topTagName)
           : branch
 
-        const envValue =
+        const baseEnvValue =
           getEnvValueByBranch(topRepositoryName, envLookupBranch) ||
           getEnvValueByBranch(outRepository, envLookupBranch)
-        console.log('envValue: ', envValue)
+        console.log('envValue: ', baseEnvValue)
   
-        if (!envValue) {
+        if (!baseEnvValue) {
           core.setFailed(`${outRepository} ${branch} 环境变量不存在`)
           return
         }
+
+        // `extra` 合并进 envValue，parse 端会一并导出为环境变量，不需要再加一个字段。
+        // 用途是把「本次改了什么」告诉部署方，例如只改前端时不必重启后端。
+        let envValue = baseEnvValue
+        if (extra.trim()) {
+          try {
+            const parsedExtra = JSON.parse(extra)
+            if (parsedExtra && typeof parsedExtra === 'object' && !Array.isArray(parsedExtra)) {
+              envValue = {...baseEnvValue, ...parsedExtra}
+            } else {
+              core.setFailed('extra 必须是一个 JSON 对象')
+              return
+            }
+          } catch (e) {
+            // 静默忽略会让部署方拿到错误的默认值，那比直接失败更难查。
+            core.setFailed(`extra 不是合法 JSON: ${extra}`)
+            return
+          }
+        }
+        console.log('envValue (merged): ', envValue)
   
         const tagName = `${outRepository}/${branch}/${timesTamp}`
         const tagMessage = {

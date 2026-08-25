@@ -21,6 +21,10 @@ inputs:
   tagBranch:
     required: false
     description: "当 tag 仅有 git 标记、无 Release 且无法从 tag 名/附注解析时，指定要更新到该 tag 提交的分支名（如 main、master、prod）"
+  extra:
+    required: false
+    description: "追加到 envValue 的 JSON 对象，会被 parse 一并导出为环境变量；用于让部署方知道本次该做什么（例如只改了前端）"
+    default: ""
   runCommand:
     required: false
     description: "执行的命令"
