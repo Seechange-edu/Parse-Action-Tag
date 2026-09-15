@@ -30,8 +30,12 @@ async function run(): Promise<void> {
     const extra: string = core.getInput('extra')
 
     if (type === 'stringify') {
+        // tagName wins over the ref. 部署方用 branch 做镜像 tag、checkout 的 ref
+        // 和读 release notes 的目标，所以传了 tagName 就必须用它。PROD 现在由
+        // repository_dispatch 触发（ref 是 refs/heads/dev），靠 ref 推断会把
+        // 镜像打成 prod:dev、并且读不到 release notes。
         const branchFromRef = getBranchByHead(ref) || getBranchByTag(ref)
-        const branch = branchFromRef || topTagName.trim()
+        const branch = topTagName.trim() || branchFromRef
         const {repository, pusher} = pushPayload || {}
         const {full_name} = repository || {}
         const {name: pusherName} = pusher || {}
