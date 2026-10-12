@@ -484,6 +484,14 @@ const REPOSITORY_ENV_MAP = {
             OUT_PORT: 3004,
             ENV_FILE: 'prod.env'
         },
+        // 发版 tag 如 shanghai-debate-v1.0.0 → prod-shanghai-debate，镜像 prod:shanghai-debate-v1.0.0
+        'prod-shanghai-debate': {
+            NAME: 'shanghai-debate-prod',
+            ACTIVE: 'shanghai-debate-prod',
+            PORT: 3000,
+            OUT_PORT: 3011,
+            ENV_FILE: 'prod-shanghai-debate.env'
+        },
         'dev-oxford': {
             NAME: 'dev-oxford',
             ACTIVE: 'dev-oxford',
@@ -741,7 +749,7 @@ const REPOSITORY_ENV_MAP = {
  * 发版 tag → 环境表键。按 tag 里含的变体关键字路由到对应 prod 变体，匹配前缀或后缀
  * （如 aimcup-v1.0.0 或 v1.0.0-aimcup 都行）：
  *   aimcup → prod-aimcup；ipdc-judge → prod-ipdc-judge；ipdc → prod-ipdc；
- *   oxford → prod-oxford；school → prod-school；否则 prod。
+ *   oxford → prod-oxford；school → prod-school；shanghai-debate → prod-shanghai-debate；否则 prod。
  * 顺序要紧：`ipdc-judge` 必须在 `ipdc` 之前判断，否则 ipdc-judge 的 tag 会被 ipdc 抢先命中。
  */
 function resolveProdEnvBranchFromReleaseTag(topTagName) {
@@ -764,6 +772,9 @@ function resolveProdEnvBranchFromReleaseTag(topTagName) {
     }
     if (tag.includes('school')) {
         return 'prod-school';
+    }
+    if (tag.includes('shanghai-debate')) {
+        return 'prod-shanghai-debate';
     }
     return 'prod';
 }
