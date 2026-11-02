@@ -311,6 +311,13 @@ const REPOSITORY_ENV_MAP = {
         OUT_PORT: 3012,
         ENV_FILE: 'prod-sunday-sparring.env'
       },
+      'prod-general-register': {
+        NAME: 'general-register-prod',
+        ACTIVE: 'general-register-prod',
+        PORT: 3000,
+        OUT_PORT: 3016,
+        ENV_FILE: 'prod-general-register.env'
+      },
       'dev-oxford':{
         NAME: 'dev-oxford',
         ACTIVE: 'dev-oxford',
@@ -571,7 +578,8 @@ const REPOSITORY_ENV_MAP = {
  *   aimcup → prod-aimcup; ipdc-judge → prod-ipdc-judge; ipdc → prod-ipdc;
  *   oxford → prod-oxford; school → prod-school;
  *   shanghai-debate → prod-shanghai-debate;
- *   sunday-sparring → prod-sunday-sparring; otherwise prod.
+ *   sunday-sparring → prod-sunday-sparring;
+ *   general-register → prod-general-register; otherwise prod.
  * Check ipdc-judge before ipdc because its tag also contains ipdc.
  */
 export function resolveProdEnvBranchFromReleaseTag(topTagName: string): string {
@@ -600,6 +608,9 @@ export function resolveProdEnvBranchFromReleaseTag(topTagName: string): string {
   }
   if (tag.includes('sunday-sparring')) {
     return 'prod-sunday-sparring'
+  }
+  if (tag.includes('general-register')) {
+    return 'prod-general-register'
   }
   return 'prod'
 }
