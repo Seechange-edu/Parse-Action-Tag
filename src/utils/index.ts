@@ -104,7 +104,8 @@ enum RepositoryEnum {
   SEECHANGE_SLIDESHOW = 'seechange-slides',
   THINK_AND_SPEAK = 'think-and-speak',
   HIRING_SCOUT = 'hiring-scout',
-  API_METER = 'api-meter'
+  API_METER = 'api-meter',
+  SEECHANGE_STUDIO = 'seechange-studio'
 }
 
 const REPOSITORY_ENV_MAP = {
@@ -568,6 +569,16 @@ const REPOSITORY_ENV_MAP = {
         WEB_PORT: 80,
         WEB_OUT_PORT: 5175,
         WEB_RUN_ARGS: ''
+      }
+    },
+    [RepositoryEnum.SEECHANGE_STUDIO]: {
+      // A published release resolves to this entry. The default branch is not
+      // a deploy environment. Host port 18788 is free on hk-prod.
+      prod: {
+        NAME: 'seechange-studio',
+        ACTIVE: 'prod',
+        PORT: 8080,
+        OUT_PORT: 18788
       }
     }
   }
